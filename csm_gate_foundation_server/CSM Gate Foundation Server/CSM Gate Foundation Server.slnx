@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="CSM Gate Foundation Server Core/CSM Gate Foundation Server.csproj" />
+</Solution>
