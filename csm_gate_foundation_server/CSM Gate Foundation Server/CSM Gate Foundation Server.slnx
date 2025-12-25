@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
     <File Path=".gitignore" />
   </Folder>
+  <Project Path="CSM Gate Foundation Core/CSM Gate Foundation Core.csproj" Id="6b8f2f8e-6905-4490-a07c-65ee934e6f82" />
   <Project Path="CSM Gate Foundation Server Core/CSM Gate Foundation Server.csproj" />
 </Solution>

@@ -11,4 +11,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CSM.Server.Core" Version="1.1.2" />
+  </ItemGroup>
+
 </Project>

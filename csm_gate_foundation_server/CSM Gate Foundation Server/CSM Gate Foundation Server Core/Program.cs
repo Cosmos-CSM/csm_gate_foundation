@@ -1,26 +1,18 @@
-namespace YourProject;
+using CSM_Server_Core.Core.Models;
+using CSM_Server_Core.Core.Utils;
 
-internal class Program
-{
-    static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+namespace CSM_Gate_Foundation_Server;
 
-        // Add services to the container.
+internal class Program {
+    static void Main(string[] args) {
+        ServerUtils.Start(
+                "CSMS",
+                async (WebApplicationBuilder appBuilder, ServerSettings serverSettings) => {
 
-        builder.Services.AddControllers();
+                },
+                async (WebApplication webApp, ServerSettings serverSettings) => {
 
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
-
+                }
+            );
     }
 }
