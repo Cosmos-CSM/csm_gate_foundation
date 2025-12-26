@@ -38,6 +38,7 @@ internal class Program {
 
                     // --> Injecting Gate Foundation services.
                     services.AddScoped<IAuthService, AuthService>();
+                    services.AddScoped<IUsersService, UsersService>();
                 },
                 async (WebApplication webApp, ServerSettings serverSettings) => {
 

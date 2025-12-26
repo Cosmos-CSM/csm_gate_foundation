@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CSM.Server.Core" Version="2.0.1" />
+    <PackageReference Include="CSM.Server.Core" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>

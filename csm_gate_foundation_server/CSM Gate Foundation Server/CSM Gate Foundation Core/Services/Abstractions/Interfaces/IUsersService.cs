@@ -11,15 +11,15 @@ public interface IUsersService
     : IService<User> {
 
     /// <summary>
-    ///     Reads the <see cref="User"/> data with the given <paramref name="identity"/>.
+    ///     Reads the <see cref="User"/> data with the given <paramref name="username"/>.
     /// </summary>
-    /// <param name="identity">
+    /// <param name="username">
     ///     User's identity.
     /// </param>
     /// <returns>
     ///     <see cref="User"/> data.
     /// </returns>
-    Task<User> Read(string identity);
+    Task<User> Read(string username);
 
     /// <summary>
     ///     Reads the effective <see cref="Permit"/> collection the given <see cref="User"/>'s <paramref name="id"/> have access to.

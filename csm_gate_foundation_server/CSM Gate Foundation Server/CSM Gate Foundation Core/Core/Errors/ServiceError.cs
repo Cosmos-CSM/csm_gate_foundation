@@ -26,16 +26,14 @@ public class ServiceError
     /// <summary>
     ///     Creates a new instance.
     /// </summary>
-    /// <param name="message">
-    ///     Error title message.
-    /// </param>
     /// <param name="event">
     ///     Error event trigger.
     /// </param>
     /// <param name="exception">
     ///     System exception caught.
     /// </param>
-    public ServiceError(string message, ServiceErrorEvents @event, Exception? exception = null) : base(message, @event, exception) {
+    public ServiceError(ServiceErrorEvents @event, Exception? exception = null)
+        : base("Service error", @event, exception) {
     }
 }
 
@@ -49,15 +47,13 @@ public class ServiceError<TEntity>
     /// <summary>
     ///     Creates a new instance.
     /// </summary>
-    /// <param name="message">
-    ///     Error title message.
-    /// </param>
     /// <param name="event">
     ///     Error event trigger.
     /// </param>
     /// <param name="exception">
     ///     System exception caught.
     /// </param>
-    public ServiceError(string message, ServiceErrorEvents @event, Exception? exception = null) : base(message, @event, exception) {
+    public ServiceError(ServiceErrorEvents @event, Exception? exception = null)
+        : base("Service error", @event, exception) {
     }
 }
