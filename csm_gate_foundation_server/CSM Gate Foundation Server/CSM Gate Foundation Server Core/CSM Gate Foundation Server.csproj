@@ -12,7 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSM.Server.Core" Version="1.1.2" />
+    <PackageReference Include="CSM.Server.Core" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSM Gate Foundation Core\CSM Gate Foundation Core.csproj" />
   </ItemGroup>
 
 </Project>

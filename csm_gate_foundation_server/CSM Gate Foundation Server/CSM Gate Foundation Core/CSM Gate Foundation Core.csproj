@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <PackageReference Include="CSM.Security.Database.Core" Version="1.0.1" />
+    <PackageReference Include="CSM.Server.Core" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
