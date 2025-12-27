@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 
 using CSM_Gate_Foundation_Core.Core.Errors;
+using CSM_Gate_Foundation_Core.Core.Models;
 using CSM_Gate_Foundation_Core.Managers.Abstractions.Interfaces;
 using CSM_Gate_Foundation_Core.Services.Abstractions.Interfaces;
 using CSM_Gate_Foundation_Core.Services.Models.Inputs;
@@ -10,8 +11,6 @@ using CSM_Security_Database_Core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-
-using TWS_Customer.Managers.Session;
 
 using SessionsBag = System.Collections.Concurrent.ConcurrentDictionary<System.Guid, (CSM_Gate_Foundation_Core.Services.Models.Inputs.AuthInput Credentials, System.DateTime Expiration)>;
 using SessionScope = (CSM_Gate_Foundation_Core.Services.Models.Inputs.AuthInput authInput, System.DateTime expiration);
@@ -118,7 +117,7 @@ public sealed class SessionsManager
         IUsersService usersService = serviceProvider.GetRequiredService<IUsersService>();
 
         try {
-            User userAccount = await usersService.Read(input.Identity);
+            User userAccount = await usersService.Read(input.Username);
 
             if (!input.Password.SequenceEqual(userAccount.Password))
                 throw new SessionManagerError(AuthErrorEvents.NO_REQ_CONTEXT);

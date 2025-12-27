@@ -13,7 +13,7 @@ public record AuthInput {
     /// <summary>
     ///     User identity.
     /// </summary>
-    public required string Identity { get; init; }
+    public required string Username { get; init; }
 
     /// <summary>
     ///     User secret password.

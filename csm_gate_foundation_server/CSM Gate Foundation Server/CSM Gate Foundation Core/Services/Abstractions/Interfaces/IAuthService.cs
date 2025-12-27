@@ -1,8 +1,7 @@
-﻿using CSM_Gate_Foundation_Core.Services.Models.Inputs;
+﻿using CSM_Gate_Foundation_Core.Core.Models;
+using CSM_Gate_Foundation_Core.Services.Models.Inputs;
 
 using CSM_Server_Core.Abstractions.Interfaces;
-
-using TWS_Customer.Managers.Session;
 
 namespace CSM_Gate_Foundation_Core.Services.Abstractions.Interfaces;
 

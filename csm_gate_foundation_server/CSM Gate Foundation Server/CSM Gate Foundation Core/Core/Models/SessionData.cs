@@ -2,7 +2,7 @@
 
 using CSM_Security_Database_Core.Entities;
 
-namespace TWS_Customer.Managers.Session;
+namespace CSM_Gate_Foundation_Core.Core.Models;
 
 /// <summary>
 ///     Represents a server user session data.
