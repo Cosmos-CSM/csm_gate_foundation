@@ -2,6 +2,9 @@
 
 library;
 
+//! --> Exporting proxies.
+export 'package:csm_client_core/src/common/extensions.dart';
+
 //! --> Exporting [src] <--
 
 export 'src/gate_foundation_server.dart';
