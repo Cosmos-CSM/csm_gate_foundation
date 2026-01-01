@@ -13,8 +13,14 @@ final class _AuthPageForm extends StatefulWidget {
   /// [SessionData] server session information from the given credentials.
   final FutureOr<void> Function(SessionData sessionData) onAuthSuccess;
 
+  final double inputsWidth;
+
   /// Creates a new [_AuthPageForm] instance.
-  const _AuthPageForm({required this.solutionSign, required this.onAuthSuccess});
+  const _AuthPageForm({
+    required this.inputsWidth,
+    required this.solutionSign,
+    required this.onAuthSuccess,
+  });
 
   @override
   State<_AuthPageForm> createState() => _AuthPageFormState();
@@ -24,8 +30,6 @@ final class _AuthPageForm extends StatefulWidget {
 ///
 /// Hanles the state management from [_AuthPageForm] and how it's being drawn.
 final class _AuthPageFormState extends State<_AuthPageForm> {
-  /// Specifies the max amount of width that all controls in the form will take.
-  static const double _maxInputsWidth = 275;
 
   /// Access to the inner [Form] widget state.
   final GlobalKey<FormState> _formStateKey = GlobalKey();
@@ -93,32 +97,30 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
       AuthInput.a(widget.solutionSign, usrValue, pwdValue.bytes),
     );
 
-    authResolver.resolve(objectBuilder: objectBuilder, onSuccess: onSuccess, onFailure: onFailure, onException: onException, onConnectionFailure: onConnectionFailure)
-
     authResolver.resolve(
       objectBuilder: () => SessionData(),
       onSuccess: (SuccessFrame<SessionData> success) => widget.onAuthSuccess(success.content),
       onFailure: (FailureFrame failure, int status) {
         if (status != 401) {
-          errorMsg = FoundationMessages.unknownServerException;
+          errorMsg = GateFoundationViewMessageConstants.unknownServerException;
           return;
         }
 
-        final ExceptionInfo exInfo = failure.content;
-        switch (exInfo.situation) {
+        final ErrorInfo exInfo = failure.content;
+        switch (exInfo.event) {
           case 0:
             usrErrorMsg = exInfo.advise;
           case 1:
             pwdErrorMsg = exInfo.advise;
           default:
-            errorMsg = FoundationMessages.unknownServerException;
+            errorMsg = GateFoundationViewMessageConstants.unknownServerException;
         }
       },
       onException: (TracedException exception) {
-        errorMsg = FoundationMessages.unknownServerException;
+        errorMsg = GateFoundationViewMessageConstants.unknownServerException;
       },
       onConnectionFailure: () {
-        errorMsg = FoundationMessages.connectionError;
+        errorMsg = GateFoundationViewMessageConstants.connectionError;
       },
       onFinally: () {
         setState(() {
@@ -140,16 +142,21 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
             Visibility(
               visible: errorMsg.isNotEmpty,
               child: MessageWidget(
-                width: _maxInputsWidth - 25,
                 text: errorMsg,
+                padding: EdgeInsets.all(12),
+                width: widget.inputsWidth - 15,
+                themeData: ThemingUtils.get(context).controlError,
               ),
             ),
             TextInput(
-              label: 'Identity',
-              hint: 'Your solution identity',
-              autofillHints: <String>[AutofillHints.username, AutofillHints.email],
+              label: 'Username',
+              hint: 'Your organization username',
+              autofillHints: <String>[
+                AutofillHints.username,
+                AutofillHints.email,
+              ],
               errorText: usrErrorMsg,
-              width: _maxInputsWidth,
+              width: widget.inputsWidth,
               isEnabled: !isLoading,
               onChanged: (String text) => usrValue = text,
               validator: validateTextInput,
@@ -158,14 +165,19 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
               label: 'Password',
               hint: 'Your secret word',
               isPrivate: true,
-              autofillHints: <String>[AutofillHints.password],
+              autofillHints: <String>[
+                AutofillHints.password,
+              ],
               errorText: pwdErrorMsg,
-              width: _maxInputsWidth,
+              width: widget.inputsWidth,
               isEnabled: !isLoading,
               onChanged: (String text) => pwdValue = text,
               validator: validateTextInput,
             ),
-            ButtonFlat(width: _maxInputsWidth, onClick: authenticate),
+            ButtonFlat(
+              width: widget.inputsWidth,
+              onClick: authenticate,
+            ),
           ],
         ),
       ),

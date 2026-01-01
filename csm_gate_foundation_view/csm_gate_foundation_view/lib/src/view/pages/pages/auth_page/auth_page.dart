@@ -1,9 +1,8 @@
 import 'dart:async' show FutureOr;
 
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
-import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
 import 'package:csm_gate_foundation_view/src/core/constants/messages_constants.dart';
-import 'package:csm_view/csm_view.dart';
+import 'package:csm_view/csm_view.dart' hide LayoutBuilder;
 import 'package:flutter/material.dart';
 
 part '_auth_page_form.dart';
@@ -16,6 +15,9 @@ final class AuthPage extends ViewPageBase {
   /// Solution authentication scope sign identification.
   final String solutionSign;
 
+  /// Auth page tenant organization.
+  final ImageProvider<Object> tenanImage;
+
   /// Callback when the [AuthPage] correctly authenticates the user information.
   ///
   ///
@@ -23,7 +25,12 @@ final class AuthPage extends ViewPageBase {
   final FutureOr<void> Function(SessionData serverSession) onAuthSuccess;
 
   /// Creates a new [AuthPage] instance.
-  const AuthPage({super.key, required this.solutionSign, required this.onAuthSuccess});
+  const AuthPage({
+    super.key,
+    required this.tenanImage,
+    required this.solutionSign,
+    required this.onAuthSuccess,
+  });
 
   @override
   Widget compose(BuildContext buildContext, Size windowSize, Size pageSize) {
@@ -39,6 +46,13 @@ final class AuthPage extends ViewPageBase {
     final double translation = pageSize.height <= maxHeightAllowedToTranslateForm
         ? 0
         : -offsetTransaltionAboveCenterForm;
+
+    final double onFullViewInputsWith = (((pageSize.width / 2) - (itemSeparation + separatorDecoratorWidth)) - 50);
+    double inputsWidth = !isFullView
+        ? 275
+        : onFullViewInputsWith > 450
+        ? 450
+        : onFullViewInputsWith;
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -66,21 +80,31 @@ final class AuthPage extends ViewPageBase {
                               padding: EdgeInsets.symmetric(
                                 horizontal: isFullView ? 0 : (itemSeparation + separatorDecoratorWidth),
                               ),
-                              child: FittedBox(child: _AuthPageBusinessLogo()),
+                              child: FittedBox(
+                                child: _AuthPageBusinessLogo(
+                                  tenantImage: tenanImage,
+                                ),
+                              ),
                             ),
                             // --> Separator bar.
                             Visibility(
                               visible: isFullView,
                               child: ColoredBox(
                                 color: Colors.grey,
-                                child: SizedBox.fromSize(size: Size(separatorDecoratorWidth, separatorHeight)),
+                                child: SizedBox.fromSize(
+                                  size: Size(separatorDecoratorWidth, separatorHeight),
+                                ),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: isFullView ? 0 : (itemSeparation + separatorDecoratorWidth),
                               ),
-                              child: _AuthPageForm(solutionSign: solutionSign, onAuthSuccess: onAuthSuccess),
+                              child: _AuthPageForm(
+                                solutionSign: solutionSign,
+                                onAuthSuccess: onAuthSuccess,
+                                inputsWidth: inputsWidth,
+                              ),
                             ),
                           ],
                         ),

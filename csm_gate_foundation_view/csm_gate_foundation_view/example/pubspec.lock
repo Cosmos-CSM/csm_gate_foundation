@@ -55,7 +55,7 @@ packages:
     description:
       path: "csm_gate_foundation_client/csm_gate_foundation_client"
       ref: HEAD
-      resolved-ref: "55ef498112978f39e0a74553c8c1bc9e26622c54"
+      resolved-ref: "2f6d2b6d96840356730eb39941aa562127a412e6"
       url: "https://github.com/Cosmos-CSM/csm_gate_foundation"
     source: git
     version: "1.0.0"
@@ -71,7 +71,7 @@ packages:
     description:
       path: "."
       ref: org_refactor_break
-      resolved-ref: "054df7a4e29925ea52cd79839cf5fe0f30e703c8"
+      resolved-ref: a5fd11eafd1e8df018f7a68a5bbb2581325b64e2
       url: "https://github.com/Cosmos-CSM/csm_view"
     source: git
     version: "7.0.1"

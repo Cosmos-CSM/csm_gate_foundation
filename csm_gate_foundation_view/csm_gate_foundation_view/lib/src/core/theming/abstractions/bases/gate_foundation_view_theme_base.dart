@@ -5,13 +5,17 @@ import 'package:csm_view/csm_view.dart';
 abstract class GateFoundationViewThemeBase extends ThemeDataBase implements IGateFoundationViewTheme {
   @override
   /// Asset access for the business logo image.
-  final String loginBusinessLogo;
+  late final String loginBusinessLogo;
 
   /// Creates a new instance.
   GateFoundationViewThemeBase(
     super.identifier, {
     required super.icon,
+    required super.page,
+    required super.control,
+    required super.controlError,
     required super.iconBackground,
+    required super.controlSuccess,
 
     required this.loginBusinessLogo,
   });

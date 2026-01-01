@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    GateFoundationViewModule(),
+    GateFoundationViewModule(
+      signature: 'CSMGF',
+    ),
   );
 }
