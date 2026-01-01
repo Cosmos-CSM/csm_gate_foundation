@@ -40,7 +40,7 @@ void main() {
       test(
         '[authenticate]: correctly gets {ServerSession} object',
         () async {
-          final CSMGateServerResolver<SessionData> resolver = await serviceMock.authenticate(input);
+          final GateFoundationServerResolver<SessionData> resolver = await serviceMock.authenticate(input);
           final SessionData serverSession = resolver.resolveDirect(() => SessionData());
 
           expect(serverSession.token, sessionDataMock.token);

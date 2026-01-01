@@ -9,7 +9,7 @@ void main() {
 
   setUp(
     () {
-      authServiceMock = CSMGateFoundationServer(
+      authServiceMock = GateFoundationServer(
         sign: 'CSMGF',
         isRelease: false,
       ).authService;
@@ -30,7 +30,7 @@ void main() {
       test(
         '[authenticate]: correctly gets { SessionData }',
         () async {
-          final CSMGateServerResolver<SessionData> resolver = await authServiceMock.authenticate(authInput);
+          final GateFoundationServerResolver<SessionData> resolver = await authServiceMock.authenticate(authInput);
           final SessionData sessionData = resolver.resolveDirect(
             () => SessionData(),
           );

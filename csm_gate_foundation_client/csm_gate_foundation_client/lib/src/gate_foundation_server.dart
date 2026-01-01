@@ -1,15 +1,15 @@
 import 'package:csm_client_core/csm_client_core.dart';
-import 'package:csm_gate_foundation_client/src/csm_gate_foundation_server_options.dart';
+import 'package:csm_gate_foundation_client/src/gate_foundation_server_options.dart';
 import 'package:csm_gate_foundation_client/src/services/abstractions/interfaces/iauth_service.dart';
 import 'package:csm_gate_foundation_client/src/services/auth_service.dart';
 
 /// Represents a server communication handler with { CSM Gate Foundation Server }.
-final class CSMGateFoundationServer extends ServerBase {
+final class GateFoundationServer extends ServerBase {
   /// {Auth} operations service.
   late final IAuthService authService;
 
   /// Creates a new instance.
-  CSMGateFoundationServer({
+  GateFoundationServer({
     Uri? devHost,
     required String sign,
     required bool isRelease,
@@ -26,7 +26,7 @@ final class CSMGateFoundationServer extends ServerBase {
              ),
          isRelease: isRelease,
        ) {
-    CSMGateFoundationServerOptions.sign = sign;
+    GateFoundationServerOptions.sign = sign;
 
     Uri host = super.serverHost;
     Client? client = super.httpClient;

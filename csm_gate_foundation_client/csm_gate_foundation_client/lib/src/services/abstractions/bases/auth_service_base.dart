@@ -1,8 +1,8 @@
 import 'dart:core' hide Uri;
 import 'package:csm_client_core/csm_client_core.dart';
-import 'package:csm_gate_foundation_client/src/abstractions/bases/csm_gate_foundation_service_base.dart';
+import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundation_service_base.dart';
 import 'package:csm_gate_foundation_client/src/core/models/session_data.dart';
-import 'package:csm_gate_foundation_client/src/csm_gate_foundation_server_resolver.dart';
+import 'package:csm_gate_foundation_client/src/gate_foundation_server_resolver.dart';
 import 'package:csm_gate_foundation_client/src/models/inputs/auth_input.dart';
 import 'package:csm_gate_foundation_client/src/services/abstractions/interfaces/iauth_service.dart';
 
@@ -20,8 +20,8 @@ abstract class AuthServiceBase extends CSMGateFoundationServiceBase implements I
        );
 
   @override
-  Future<CSMGateServerResolver<SessionData>> authenticate(AuthInput input) async {
+  Future<GateFoundationServerResolver<SessionData>> authenticate(AuthInput input) async {
     final IResponseController controller = await postSecure('authenticate', input);
-    return CSMGateServerResolver<SessionData>(controller);
+    return GateFoundationServerResolver<SessionData>(controller);
   }
 }

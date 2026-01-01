@@ -1,5 +1,5 @@
 /// Stores internal constant options for {CSM Gate Foundation Server Client} purposes.
-final class CSMGateFoundationServerOptions {
+final class GateFoundationServerOptions {
   /// Server signature.
   static String sign = "CSMGF";
 }

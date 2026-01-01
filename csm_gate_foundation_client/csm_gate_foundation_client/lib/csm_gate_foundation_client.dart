@@ -4,8 +4,8 @@ library;
 
 //! --> Exporting [src] <--
 
-export 'src/csm_gate_foundation_server.dart';
-export 'src/csm_gate_foundation_server_resolver.dart';
+export 'src/gate_foundation_server.dart';
+export 'src/gate_foundation_server_resolver.dart';
 
 //! --> Exporting [Core Models] <--
 export 'src/core/models/session_data.dart';
