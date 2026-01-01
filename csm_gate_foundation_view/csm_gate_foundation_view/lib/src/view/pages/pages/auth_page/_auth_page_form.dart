@@ -90,8 +90,10 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
     });
 
     final GateFoundationServerResolver<SessionData> authResolver = await securityService.authenticate(
-      AuthenticationInput.a(widget.solutionSign, usrValue, pwdValue.bytes),
+      AuthInput.a(widget.solutionSign, usrValue, pwdValue.bytes),
     );
+
+    authResolver.resolve(objectBuilder: objectBuilder, onSuccess: onSuccess, onFailure: onFailure, onException: onException, onConnectionFailure: onConnectionFailure)
 
     authResolver.resolve(
       objectBuilder: () => SessionData(),

@@ -3,7 +3,7 @@
 library;
 
 //! --> Exporting proxies.
-export 'package:csm_client_core/src/common/extensions.dart';
+export 'package:csm_client_core/csm_client_core.dart';
 
 //! --> Exporting [src] <--
 
