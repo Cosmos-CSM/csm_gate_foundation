@@ -5,7 +5,7 @@ import 'package:csm_client_core/csm_client_core.dart';
 ///
 /// Defines final behavior for a [GateFoundationServerResolver] wich handles [ServiceI] requests implementations from a [FoundationServer] and [FoundationServiceB], resolving
 /// as a {Foundation} package scope the [ServerI] implementation responses as needed.
-final class GateFoundationServerResolver<T extends DecodableI?> extends ResponseResolverBase<T> {
+final class GateFoundationServerResolver<T extends IDecodable?> extends ResponseResolverBase<T> {
   /// Creates a new [GateFoundationServerResolver] instance.
   const GateFoundationServerResolver(super.controller);
 

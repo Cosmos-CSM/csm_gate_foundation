@@ -5,7 +5,7 @@ import 'package:csm_client_core/csm_client_core.dart';
 ///
 /// Defines final behavior for a [FoundationResponseResolver] wich handles [ServiceI] requests implementations from a [FoundationServer] and [FoundationServiceB], resolving
 /// as a {Foundation} package scope the [ServerI] implementation responses as needed.
-final class FoundationResponseResolver<T extends DecodableI?> extends ResponseResolverBase<T> {
+final class FoundationResponseResolver<T extends IDecodable?> extends ResponseResolverBase<T> {
   /// Creates a new [FoundationResponseResolver] instance.
   const FoundationResponseResolver(super.controller);
 

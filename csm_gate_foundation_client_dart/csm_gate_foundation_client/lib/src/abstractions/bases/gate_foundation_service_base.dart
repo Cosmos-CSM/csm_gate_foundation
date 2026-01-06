@@ -4,13 +4,13 @@ import 'package:csm_gate_foundation_client/src/gate_foundation_server_options.da
 /// Custom {abstract} class for [ServiceB] implementations.
 ///
 ///
-/// Defines base behavior for [CSMGateFoundationServiceBase] implementations that are representations of requestable operations at a [ServerI] implementation.
-abstract class CSMGateFoundationServiceBase extends ServiceBase {
+/// Defines base behavior for [GateFoundationServiceBase] implementations that are representations of requestable operations at a [ServerI] implementation.
+abstract class GateFoundationServiceBase extends ServiceBase {
   /// Server signature identificator.
   String get _sign => GateFoundationServerOptions.sign;
 
-  /// Creates a new [CSMGateFoundationServiceBase] instance.
-  CSMGateFoundationServiceBase(
+  /// Creates a new [GateFoundationServiceBase] instance.
+  GateFoundationServiceBase(
     super.host,
     super.servicePath, {
     super.client,
@@ -18,7 +18,7 @@ abstract class CSMGateFoundationServiceBase extends ServiceBase {
   });
 
   ///
-  Future<IResponseController> getSecure<T extends EncodableI>(
+  Future<IResponseController> getSecure<T extends IEncodable>(
     String endpoint,
     String authToken, {
     Headers? headers,
@@ -46,7 +46,7 @@ abstract class CSMGateFoundationServiceBase extends ServiceBase {
   /// [authToken] custom {TWS} authorization token when [ServerI] controller requires it.
   ///
   /// [headers] request scope [Headers] object.
-  Future<IResponseController> postSecure<T extends EncodableI>(
+  Future<IResponseController> postSecure<T extends IEncodable>(
     String endpoint,
     T requestBody, {
     String? authToken,
@@ -71,7 +71,7 @@ abstract class CSMGateFoundationServiceBase extends ServiceBase {
   /// [authToken] custom {TWS} authorization token when [ServerI] controller requires it.
   ///
   /// [headers] request scope [Headers] object.
-  Future<IResponseController> postListSecure<T extends EncodableI>(
+  Future<IResponseController> postListSecure<T extends IEncodable>(
     String endpoint,
     List<T> request, {
     String? authToken,

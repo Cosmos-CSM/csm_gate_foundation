@@ -7,7 +7,7 @@ import 'package:csm_gate_foundation_client/src/models/inputs/auth_input.dart';
 import 'package:csm_gate_foundation_client/src/services/abstractions/interfaces/iauth_service.dart';
 
 /// Represents a server service communication handler for {Auth} operations.
-abstract class AuthServiceBase extends CSMGateFoundationServiceBase implements IAuthService {
+abstract class AuthServiceBase extends GateFoundationServiceBase implements IAuthService {
   /// Creates a new instance.
   AuthServiceBase(
     Uri host, {

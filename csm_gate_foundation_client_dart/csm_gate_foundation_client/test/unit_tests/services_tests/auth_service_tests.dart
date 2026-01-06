@@ -1,6 +1,5 @@
 import 'dart:core' hide Uri;
 
-import 'package:csm_client_core/csm_client_core.dart' show Client, StringExtension, Uri;
 import 'package:csm_client_testing/csm_client_testing.dart';
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:test/test.dart';

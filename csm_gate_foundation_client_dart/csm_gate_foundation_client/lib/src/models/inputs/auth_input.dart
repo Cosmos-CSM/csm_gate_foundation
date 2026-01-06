@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:csm_client_core/csm_client_core.dart';
 
 /// Represents an { Auth } operation input data.
-final class AuthInput implements EncodableI {
+final class AuthInput implements IEncodable {
   /// Solution signature.
   String sign = '';
 

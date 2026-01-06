@@ -1,7 +1,7 @@
 import 'package:csm_client_core/csm_client_core.dart';
 
 /// Represents a server session data.
-final class SessionData implements DecodableI, EncodableI {
+final class SessionData implements IEncodable, IDecodable {
   /// Privileges wildcard, means can access everything.
   bool wildcard = false;
 
