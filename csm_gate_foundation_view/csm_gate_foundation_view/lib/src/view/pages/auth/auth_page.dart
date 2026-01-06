@@ -16,18 +16,18 @@ final class AuthPage extends ViewPageBase {
   final String solutionSign;
 
   /// Auth page tenant organization.
-  final ImageProvider<Object> tenanImage;
+  final ImageProvider<Object> tenantImage;
 
   /// Callback when the [AuthPage] correctly authenticates the user information.
   ///
   ///
   /// [serverSession] server session information from the given credentials.
-  final FutureOr<void> Function(SessionData serverSession) onAuthSuccess;
+  final FutureOr<void> Function(BuildContext context, SessionData serverSession) onAuthSuccess;
 
   /// Creates a new [AuthPage] instance.
   const AuthPage({
     super.key,
-    required this.tenanImage,
+    required this.tenantImage,
     required this.solutionSign,
     required this.onAuthSuccess,
   });
@@ -43,9 +43,7 @@ final class AuthPage extends ViewPageBase {
     const double maxHeightAllowedToTranslateForm = 850;
 
     final bool isFullView = pageSize.width >= maxWidthAllowedFullView;
-    final double translation = pageSize.height <= maxHeightAllowedToTranslateForm
-        ? 0
-        : -offsetTransaltionAboveCenterForm;
+    final double translation = pageSize.height <= maxHeightAllowedToTranslateForm ? 0 : -offsetTransaltionAboveCenterForm;
 
     final double onFullViewInputsWith = (((pageSize.width / 2) - (itemSeparation + separatorDecoratorWidth)) - 50);
     double inputsWidth = !isFullView
@@ -82,7 +80,7 @@ final class AuthPage extends ViewPageBase {
                               ),
                               child: FittedBox(
                                 child: _AuthPageBusinessLogo(
-                                  tenantImage: tenanImage,
+                                  tenantImage: tenantImage,
                                 ),
                               ),
                             ),

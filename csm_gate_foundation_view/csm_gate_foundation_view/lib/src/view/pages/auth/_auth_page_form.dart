@@ -11,7 +11,7 @@ final class _AuthPageForm extends StatefulWidget {
   ///
   ///
   /// [SessionData] server session information from the given credentials.
-  final FutureOr<void> Function(SessionData sessionData) onAuthSuccess;
+  final FutureOr<void> Function(BuildContext context, SessionData sessionData) onAuthSuccess;
 
   final double inputsWidth;
 
@@ -30,7 +30,6 @@ final class _AuthPageForm extends StatefulWidget {
 ///
 /// Hanles the state management from [_AuthPageForm] and how it's being drawn.
 final class _AuthPageFormState extends State<_AuthPageForm> {
-
   /// Access to the inner [Form] widget state.
   final GlobalKey<FormState> _formStateKey = GlobalKey();
 
@@ -99,7 +98,7 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
 
     authResolver.resolve(
       objectBuilder: () => SessionData(),
-      onSuccess: (SuccessFrame<SessionData> success) => widget.onAuthSuccess(success.content),
+      onSuccess: (SuccessFrame<SessionData> success) => widget.onAuthSuccess(context, success.content),
       onFailure: (FailureFrame failure, int status) {
         if (status != 401) {
           errorMsg = GateFoundationViewMessageConstants.unknownServerException;

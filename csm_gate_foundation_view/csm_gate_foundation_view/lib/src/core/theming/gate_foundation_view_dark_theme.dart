@@ -10,12 +10,17 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
   GateFoundationViewDarkTheme()
     : super(
         'csm_gate_foundation_dark',
-        loginBusinessLogo: GateFoundationViewAssetsConstants.fullLogoWhiteWebp,
+        loginBusinessLogo: GateFoundationViewAssetsConstants.whiteLogo,
         icon: const Icon(
           Icons.abc_outlined,
         ),
         iconBackground: GateFoundationViewColorConstants.warmWhite,
-        page: ThemingData(
+        navigationLayout: const ThemingData(
+          back: GateFoundationViewColorConstants.oceanBlue,
+          fore: GateFoundationViewColorConstants.warmWhite,
+          accent: GateFoundationViewColorConstants.warmWhite,
+        ),
+        page: const ThemingData(
           back: GateFoundationViewColorConstants.lightDark,
           fore: GateFoundationViewColorConstants.warmWhite,
           accent: GateFoundationViewColorConstants.oceanBlue,
@@ -34,10 +39,15 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
           foreAlt: GateFoundationViewColorConstants.warmWhite,
           accentAlt: GateFoundationViewColorConstants.oceanBlue,
         ),
-        controlSuccess: ThemingData(
+        controlSuccess: const ThemingData(
           back: GateFoundationViewColorConstants.lightDark,
           fore: Colors.green,
           accent: Colors.green,
+        ),
+        controlDisabled: const ThemingData(
+          back: GateFoundationViewColorConstants.darkGrey,
+          fore: GateFoundationViewColorConstants.lightDark,
+          accent: GateFoundationViewColorConstants.oceanBlue,
         ),
       );
 }
