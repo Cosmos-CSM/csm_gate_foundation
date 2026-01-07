@@ -1,5 +1,5 @@
 import 'package:csm_client_core/csm_client_core.dart';
-import 'package:csm_gate_foundation_client/src/gate_foundation_server_options.dart';
+import 'package:csm_gate_foundation_client/src/_gate_foundation_server_options.dart';
 
 /// Custom {abstract} class for [ServiceB] implementations.
 ///

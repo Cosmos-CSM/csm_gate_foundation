@@ -5,19 +5,20 @@ import 'package:csm_client_core/csm_client_core.dart';
 ///
 /// Defines final behavior for a [GateFoundationServerResolver] wich handles [ServiceI] requests implementations from a [FoundationServer] and [FoundationServiceB], resolving
 /// as a {Foundation} package scope the [ServerI] implementation responses as needed.
-final class GateFoundationServerResolver<T extends IDecodable?> extends ResponseResolverBase<T> {
+final class GateFoundationServerResolver<TResponseData extends IDecodable?> extends ResponseResolverBase<TResponseData> {
   /// Creates a new [GateFoundationServerResolver] instance.
   const GateFoundationServerResolver(super.controller);
 
   /// Resolves the [ResponseController] directly with no callback handlers.
   ///
   ///
-  /// [objectBuilder] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
-  T resolveDirect(T Function() objectBuilder) {
-    T? result;
+  /// [factory] building callback for the [TResponseData] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
+  @override
+  TResponseData resolveDirect(TResponseData Function() factory) {
+    TResponseData? result;
     responseController.resolve(
       (DataMap data) {
-        final SuccessFrame<T> successFrame = SuccessFrame<T>(objectBuilder);
+        final SuccessFrame<TResponseData> successFrame = SuccessFrame<TResponseData>(factory);
         successFrame.decode(data);
 
         result = successFrame.content;
@@ -35,17 +36,17 @@ final class GateFoundationServerResolver<T extends IDecodable?> extends Response
       },
     );
 
-    if (result == null && (null is! T)) {
+    if (result == null && (null is! TResponseData)) {
       throw TracedException('Unable to resolve response controller', StackTrace.current);
     }
 
-    return result as T;
+    return result as TResponseData;
   }
 
   /// Resolves the [ResponseController] with the given callback handlers.
   ///
   ///
-  /// [objectBuilder] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
+  /// [factory] building callback for the [TResponseData] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
   ///
   /// [onSuccess] callback invoked when the [ResponseController] resulted in a success.
   ///
@@ -56,9 +57,10 @@ final class GateFoundationServerResolver<T extends IDecodable?> extends Response
   /// [onConnectionFailure] callback invoked when the [ResponseController] resulted in an exception related with connection failure.
   ///
   /// [onFinally] callback invoked after any [ResponseController] result and callback invokation.
+  @override
   void resolve({
-    required T Function() objectBuilder,
-    required void Function(SuccessFrame<T> success) onSuccess,
+    required TResponseData Function() factory,
+    required void Function(SuccessFrame<TResponseData> success) onSuccess,
     required void Function(FailureFrame failure, int status) onFailure,
     required void Function(TracedException exception) onException,
     required void Function() onConnectionFailure,
@@ -66,7 +68,7 @@ final class GateFoundationServerResolver<T extends IDecodable?> extends Response
   }) {
     responseController.resolve(
       (DataMap data) {
-        final SuccessFrame<T> successFrame = SuccessFrame<T>(objectBuilder);
+        final SuccessFrame<TResponseData> successFrame = SuccessFrame<TResponseData>(factory);
         successFrame.decode(data);
         onSuccess(successFrame);
       },

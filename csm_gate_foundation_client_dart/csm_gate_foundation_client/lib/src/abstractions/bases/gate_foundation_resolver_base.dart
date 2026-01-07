@@ -12,12 +12,12 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   /// Resolves the [ResponseController] directly with no callback handlers.
   ///
   ///
-  /// [objectBuilder] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
-  T resolveDirect(T Function() objectBuilder) {
+  /// [factory] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
+  T resolveDirect(T Function() factory) {
     T? result;
     responseController.resolve(
       (DataMap data) {
-        final SuccessFrame<T> successFrame = SuccessFrame<T>(objectBuilder);
+        final SuccessFrame<T> successFrame = SuccessFrame<T>(factory);
         successFrame.decode(data);
 
         result = successFrame.content;
@@ -45,7 +45,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   /// Resolves the [ResponseController] with the given callback handlers.
   ///
   ///
-  /// [objectBuilder] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
+  /// [factory] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
   ///
   /// [onSuccess] callback invoked when the [ResponseController] resulted in a success.
   ///
@@ -57,7 +57,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   ///
   /// [onFinally] callback invoked after any [ResponseController] result and callback invokation.
   void resolve({
-    required T Function() objectBuilder,
+    required T Function() factory,
     required void Function(SuccessFrame<T> success) onSuccess,
     required void Function(FailureFrame failure, int status) onFailure,
     required void Function(TracedException exception) onException,
@@ -66,7 +66,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   }) {
     responseController.resolve(
       (DataMap data) {
-        final SuccessFrame<T> successFrame = SuccessFrame<T>(objectBuilder);
+        final SuccessFrame<T> successFrame = SuccessFrame<T>(factory);
         successFrame.decode(data);
         onSuccess(successFrame);
       },

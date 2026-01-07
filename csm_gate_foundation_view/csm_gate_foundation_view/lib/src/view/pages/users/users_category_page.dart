@@ -1,4 +1,7 @@
+import 'package:csm_gate_foundation_view/src/view/pages/users/users_page.dart';
+import 'package:csm_gate_foundation_view/src/view/pages/users/widgets/users_entity_table_adapter.dart';
 import 'package:csm_view/csm_view.dart';
+import 'package:flutter/material.dart';
 
 /// {category page} class.
 ///
@@ -6,46 +9,28 @@ import 'package:csm_view/csm_view.dart';
 /// providing direct configruation to use it at a [CategoryLayout] instance.
 ///
 /// (@category Entity Pages)
-final class AccountsCategoryPage extends CategoryEntityViewPageBase<AccountsEntityTableAdatper> {
+class UsersCategoryPage extends CategoryEntityViewPageBase<UsersEntityTableAdatper> {
   /// Creates a new instance.
-  AccountsCategoryPage({
+  UsersCategoryPage({
     required super.routeData,
   }) : super(
-         title: 'Accounts',
-         route: FoundationRoutes.accountsPageRoute,
+         title: 'Users',
        );
 
   @override
-  List<RouteB> composeRoutes() {
-    return <RouteB>[
-      RouteWhisper<Object>(
-        FoundationRoutes.accountsCreateWhisperRoute,
-        whisperOptions: RouteWhisperOptions(),
-        pageBuilder: (BuildContext _, RouteData _) {
-          return AccountsPageCreateWhisper();
-        },
-      ),
+  List<IRoutingGraphData> composeRoutes() {
+    return <IRoutingGraphData>[
     ];
   }
 
   @override
-  AccountsEntityTableAdatper composeAdapter() {
-    return AccountsEntityTableAdatper(
-      authBuilder: authBuilder,
-    );
+  UsersEntityTableAdatper composeAdapter() {
+    return UsersEntityTableAdatper();
   }
 
   @override
-  List<ActionsRibbonNodeI> composeRibbonController(AccountsEntityTableAdatper adapter) {
-    return <ActionsRibbonNodeI>[
-      ActionsRisbbonRefresh(
-        onRefresh: adapter.refresh,
-      ),
-      ActionsRisbbonCreate(
-        onCreate: () {
-          Injector.get<Router>().go(FoundationRoutes.accountsCreateWhisperRoute);
-        },
-      ),
+  List<IActionsRibbonNode> composeRibbonController(UsersEntityTableAdatper adapter) {
+    return <IActionsRibbonNode>[
     ];
   }
 
@@ -58,9 +43,9 @@ final class AccountsCategoryPage extends CategoryEntityViewPageBase<AccountsEnti
   }
 
   @override
-  PageI composePage(BuildContext buildContext, RouteData routeData) {
-    return AccountsPage(
-      adapter: adapter,
+  IViewPage composePage(BuildContext buildContext, RoutingData routingData) {
+    return UsersPage(
+      adapter: super.adapter,
     );
   }
 }

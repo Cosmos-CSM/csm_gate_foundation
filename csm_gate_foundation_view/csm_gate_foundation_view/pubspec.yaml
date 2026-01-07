@@ -17,6 +17,11 @@ dependencies:
       url: https://github.com/Cosmos-CSM/csm_view
       ref: org_refactor_break
 
+  csm_client_core: 
+    git: 
+      url: https://github.com/Cosmos-CSM/csm_client
+      path: csm_client_core/
+
   csm_gate_foundation_client:
     git: 
       url: https://github.com/Cosmos-CSM/csm_gate_foundation
