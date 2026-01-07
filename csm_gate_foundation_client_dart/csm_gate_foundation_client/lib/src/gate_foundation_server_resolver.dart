@@ -27,7 +27,7 @@ final class GateFoundationServerResolver<TResponseData extends IDecodable?> exte
         final FailureFrame failureFrame = FailureFrame();
         failureFrame.decode(data);
         throw TracedException(
-          'FailureException: server act resulted in failure $statusCode with (${failureFrame.content.systemError})',
+          'FailureException: server act resulted in failure $statusCode with (${failureFrame.content})',
           StackTrace.current,
         );
       },

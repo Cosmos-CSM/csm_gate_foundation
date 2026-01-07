@@ -46,7 +46,7 @@ packages:
     description:
       path: csm_client_core
       ref: HEAD
-      resolved-ref: "115e943d39c83dae4328630636eac7c1bc0b9ac3"
+      resolved-ref: b58b5eb34ccf160c985f8dbc8aeb57c3f4794452
       url: "https://github.com/Cosmos-CSM/csm_client"
     source: git
     version: "8.2.0"
@@ -55,7 +55,7 @@ packages:
     description:
       path: "csm_gate_foundation_client_dart/csm_gate_foundation_client"
       ref: HEAD
-      resolved-ref: "6c826728bd4ad991497c3b7669025655dfe34cf5"
+      resolved-ref: "2031162d5efe8ffdc82d45c1d31f5690e2fe894e"
       url: "https://github.com/Cosmos-CSM/csm_gate_foundation"
     source: git
     version: "1.0.0"
@@ -103,10 +103,10 @@ packages:
     dependency: transitive
     description:
       name: ffi
-      sha256: "289279317b4b16eb2bb7e271abccd4bf84ec9bdcbe999e278a94b804f5630418"
+      sha256: d07d37192dbf97461359c1518788f203b0c9102cfd2c35a716b823741219542c
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.5"
   file:
     dependency: transitive
     description:
