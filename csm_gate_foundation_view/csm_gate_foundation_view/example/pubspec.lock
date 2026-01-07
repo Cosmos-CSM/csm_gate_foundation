@@ -55,7 +55,7 @@ packages:
     description:
       path: "csm_gate_foundation_client_dart/csm_gate_foundation_client"
       ref: HEAD
-      resolved-ref: "2031162d5efe8ffdc82d45c1d31f5690e2fe894e"
+      resolved-ref: "209e940a9625723c9fd9942b7a627bcb46d561b0"
       url: "https://github.com/Cosmos-CSM/csm_gate_foundation"
     source: git
     version: "1.0.0"

@@ -27,7 +27,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
         final FailureFrame failureFrame = FailureFrame();
         failureFrame.decode(data);
         throw TracedException(
-          'FailureException: server act resulted in failure $statusCode with (${failureFrame.content.systemError})',
+          'FailureException: server act resulted in failure $statusCode with (${failureFrame.content})',
           StackTrace.current,
         );
       },
