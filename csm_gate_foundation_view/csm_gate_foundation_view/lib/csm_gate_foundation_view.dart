@@ -5,6 +5,10 @@ export 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart' show
 export 'package:csm_view/csm_view.dart' show RoutingGraphBase, IThemeData;
 export 'package:localstorage/localstorage.dart' show initLocalStorage;
 
+//! --> Exporting modules
+export 'src/view/view_module.dart';
+export 'src/abstractions/abstractions_module.dart';
+
 //! --> Exporting [src]
 export 'src/gate_foundation_view_module.dart';
 

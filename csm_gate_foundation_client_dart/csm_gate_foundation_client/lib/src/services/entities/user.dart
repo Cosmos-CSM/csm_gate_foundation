@@ -1,11 +1,13 @@
+
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
-import 'package:csm_gate_foundation_client/src/services/entities/user_info.dart';
-import 'package:csm_gate_foundation_client/src/services/entities/user_types.dart';
 
 /// Represents an ecosystem authentication user.
 class User extends EntityBase<User> {
   /// User auth username.
   String username = "";
+
+  /// User auth password.
+  String password = "";
 
   /// Whether the user has total access.
   bool isMaster = false;
@@ -38,6 +40,7 @@ class User extends EntityBase<User> {
     return super.encode(
       <String, Object?>{
         'username': username,
+        'password': password,
         'isMaster': isMaster,
         'type': type.index,
         'userInfo': userInfo.encode(),

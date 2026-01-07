@@ -53,9 +53,9 @@ packages:
   csm_gate_foundation_client:
     dependency: transitive
     description:
-      path: "csm_gate_foundation_client/csm_gate_foundation_client"
+      path: "csm_gate_foundation_client_dart/csm_gate_foundation_client"
       ref: HEAD
-      resolved-ref: "906ebb955b794aa2b6c5c7cc4ba7d67464efa045"
+      resolved-ref: "97624a97ebef8ba020a8462aed5063308c3441cb"
       url: "https://github.com/Cosmos-CSM/csm_gate_foundation"
     source: git
     version: "1.0.0"
@@ -71,7 +71,7 @@ packages:
     description:
       path: "."
       ref: org_refactor_break
-      resolved-ref: "535d3b1ba7123eb1dc592ea8691f3d65c5a22b89"
+      resolved-ref: "0d44993ca01017ea135f153b5eac0a4c3c0aec2c"
       url: "https://github.com/Cosmos-CSM/csm_view"
     source: git
     version: "7.0.1"
@@ -170,6 +170,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.2"
   leak_tracker:
     dependency: transitive
     description:

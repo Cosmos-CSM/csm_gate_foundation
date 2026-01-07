@@ -20,7 +20,7 @@ dependencies:
   csm_gate_foundation_client:
     git: 
       url: https://github.com/Cosmos-CSM/csm_gate_foundation
-      path: csm_gate_foundation_client/csm_gate_foundation_client/
+      path: csm_gate_foundation_client_dart/csm_gate_foundation_client/
   localstorage: ^6.0.0
   
 
