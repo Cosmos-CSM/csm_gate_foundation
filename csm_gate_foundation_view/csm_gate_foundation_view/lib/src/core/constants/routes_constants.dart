@@ -19,4 +19,9 @@ final class GateFoundationViewRouteConstants {
     'administration',
     name: 'administration',
   );
+
+  static const RouteData administrationUsersPageRoute = RouteData(
+    'users',
+    name: 'administration_users',
+  );
 }

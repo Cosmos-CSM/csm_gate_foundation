@@ -43,13 +43,17 @@ abstract class GateFoundationViewModuleBase extends ViewModuleBase {
             pageBuilder: (BuildContext ctx, RoutingData routeData) => GateFoundationHomePage(),
           ),
           CategoryLayoutRoutingGraphData(
-            pages: <ICategoryLayoutPage>[],
+            pages: <ICategoryLayoutPage>[
+              UsersCategoryPage(
+                routeData: GateFoundationViewRouteConstants.administrationUsersPageRoute,
+              ),
+            ],
           ),
         ],
         navigationNodes: <INavigationLayoutNode>[
           NavigationLayoutNode(
             title: 'Administration',
-            routeData: GateFoundationViewRouteConstants.administrationPageRoute,
+            routeData: GateFoundationViewRouteConstants.administrationUsersPageRoute,
             icon: Icons.admin_panel_settings,
           ),
         ],
@@ -75,7 +79,9 @@ abstract class GateFoundationViewModuleBase extends ViewModuleBase {
     );
 
     InjectorUtils.addSingleton(gateFoundationServer);
+
     InjectorUtils.addSingleton<IAuthService>(gateFoundationServer.authService);
+    InjectorUtils.addSingleton<IUsersService>(gateFoundationServer.usersService);
 
     InjectorUtils.addSingleton<ISessionStorage>(SessionStorage(signature));
 

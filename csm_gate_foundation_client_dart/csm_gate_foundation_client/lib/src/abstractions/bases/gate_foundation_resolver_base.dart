@@ -13,6 +13,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   ///
   ///
   /// [factory] building callback for the [T] object creation in order to call [DecodableI.decode] method from [DecodableI] interface.
+  @override
   T resolveDirect(T Function() factory) {
     T? result;
     responseController.resolve(
@@ -56,6 +57,7 @@ final class FoundationResponseResolver<T extends IDecodable?> extends ResponseRe
   /// [onConnectionFailure] callback invoked when the [ResponseController] resulted in an exception related with connection failure.
   ///
   /// [onFinally] callback invoked after any [ResponseController] result and callback invokation.
+  @override
   void resolve({
     required T Function() factory,
     required void Function(SuccessFrame<T> success) onSuccess,

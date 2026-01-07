@@ -16,7 +16,7 @@ abstract class UsersServiceBase extends GateFoundationServiceBase implements IUs
 
   @override
   Future<GateFoundationServerResolver<ViewOutput<User>>> view(ViewInput<User> input, String auth) async {
-    final IResponseController controller = await postSecure('authenticate', input);
+    final IResponseController controller = await postSecure('view', input, authToken: auth);
     return GateFoundationServerResolver<ViewOutput<User>>(controller);
   }
 }

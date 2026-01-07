@@ -1,14 +1,14 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
-import 'package:csm_gate_foundation_view/src/view/abstractions/bases/gate_foundation_entity_table_base.dart';
-import 'package:csm_gate_foundation_view/src/view/pages/users/widgets/users_entity_table_adapter.dart';
 import 'package:csm_view/csm_view.dart';
 import 'package:flutter/material.dart';
+
+export 'users_entity_table_adapter.dart';
 
 /// {widget} class.
 ///
 /// Draws a {foundation} complex [EntityTable] based on [Account] {entity}, also handles basic available behavior.
-class UsersEntityTable extends GateFoundationEntityTableBase<UsersEntityTableAdatper> {
+class UsersEntityTable extends GateFoundationEntityTableBase<User, UsersEntityTableAdatper> {
   /// Creates a new [UsersEntityTable] instance.
   const UsersEntityTable({
     required super.adapter,
@@ -16,50 +16,38 @@ class UsersEntityTable extends GateFoundationEntityTableBase<UsersEntityTableAda
 
   @override
   Widget build(BuildContext context) {
-    return EntityTable<User, GateFoundationServerResolver<ViewOutput<User>>, IAuthService>(
+    return EntityTable<User, GateFoundationServerResolver<ViewOutput<User>>, IUsersService>(
       entityFactory: () => User(),
       adapter: adapter,
-      columns: <EntityTableColumnOptions<Account>>[
+      columns: <EntityTableColumnData<User>>[
         /// --> User
-        EntityTableColumnOptions<Account>(
+        EntityTableColumnData<User>(
           title: 'User',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.user,
+          factory: (User entity, int index, BuildContext buildContext) => entity.username,
         ),
 
         /// --> Wildcard
-        EntityTableColumnOptions<Account>(
+        EntityTableColumnData<User>(
           title: 'Wildcard',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.wildcard ? 'Yes' : 'No',
+          factory: (User entity, int index, BuildContext buildContext) => entity.isMaster ? 'Yes' : 'No',
         ),
 
         /// --> Name
-        EntityTableColumnOptions<Account>(
+        EntityTableColumnData<User>(
           title: 'Name',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.contact.name,
+          factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.name,
         ),
 
         /// --> lastname
-        EntityTableColumnOptions<Account>(
+        EntityTableColumnData<User>(
           title: 'Lastname',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.contact.lastName,
+          factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.lastName,
         ),
 
         /// --> Email
-        EntityTableColumnOptions<Account>(
+        EntityTableColumnData<User>(
           title: 'Email',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.contact.eMail,
-        ),
-
-        /// --> Profiles
-        EntityTableColumnOptions<Account>(
-          title: 'Profiles',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.profiles.length.toString(),
-        ),
-
-        /// --> Permits
-        EntityTableColumnOptions<Account>(
-          title: 'Permits',
-          factory: (Account entity, int index, BuildContext buildContext) => entity.permits.length.toString(),
+          factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.eMail,
         ),
       ],
     );

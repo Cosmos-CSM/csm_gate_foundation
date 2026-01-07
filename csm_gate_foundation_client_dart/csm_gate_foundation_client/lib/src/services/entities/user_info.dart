@@ -1,5 +1,4 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
-import 'package:csm_gate_foundation_client/src/services/entities/user.dart';
 
 /// Represents [User] information.
 class UserInfo extends EntityBase<UserInfo> {

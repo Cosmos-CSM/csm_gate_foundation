@@ -97,7 +97,7 @@ final class _AuthPageFormState extends State<_AuthPageForm> {
     );
 
     authResolver.resolve(
-      objectBuilder: () => SessionData(),
+      factory: () => SessionData(),
       onSuccess: (SuccessFrame<SessionData> success) => widget.onAuthSuccess(context, success.content),
       onFailure: (FailureFrame failure, int status) {
         if (status != 401) {
