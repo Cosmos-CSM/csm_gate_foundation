@@ -46,7 +46,7 @@ packages:
     description:
       path: csm_client_core
       ref: HEAD
-      resolved-ref: "6d0d8b28d8e43bf75a256f467c85d273e18e4780"
+      resolved-ref: "115e943d39c83dae4328630636eac7c1bc0b9ac3"
       url: "https://github.com/Cosmos-CSM/csm_client"
     source: git
     version: "8.2.0"
@@ -55,7 +55,7 @@ packages:
     description:
       path: "csm_gate_foundation_client_dart/csm_gate_foundation_client"
       ref: HEAD
-      resolved-ref: "6d2b5a3a7f1398f33129a5076ee8da736d236ea9"
+      resolved-ref: "6c826728bd4ad991497c3b7669025655dfe34cf5"
       url: "https://github.com/Cosmos-CSM/csm_gate_foundation"
     source: git
     version: "1.0.0"
