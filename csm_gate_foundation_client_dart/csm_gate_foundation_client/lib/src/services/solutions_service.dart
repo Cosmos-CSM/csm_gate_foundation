@@ -2,7 +2,6 @@ import 'dart:core' hide Uri;
 
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundation_service_base.dart';
-import 'package:csm_gate_foundation_client/src/services/abstractions/interfaces/isolutions_service.dart';
 
 /// Represents a [Solution] entity operations service.
 class SolutionsService extends GateFoundationServiceBase implements ISolutionsService {
