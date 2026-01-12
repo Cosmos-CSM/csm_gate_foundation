@@ -1,0 +1,9 @@
+import 'package:csm_client_core/csm_client_core.dart';
+
+/// {implementation} class for an [EntityI].
+///
+/// [Entity] that represents the information for certain actions/operations to be performed to the Solutions.
+final class Action extends CatalogEntityBase<Action> {
+  /// Creates a new instance.
+  Action();
+}

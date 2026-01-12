@@ -47,9 +47,13 @@ class User extends EntityBase<User> {
       },
     );
   }
+}
 
-  @override
-  List<EntityInvalidation<User>> evaluate() {
-    return <EntityInvalidation<User>>[];
-  }
+/// Represents [User] types.
+enum UserTypes {
+  /// When the user context is for system integration.
+  integration,
+
+  /// When the user context is for a physical person.
+  person,
 }

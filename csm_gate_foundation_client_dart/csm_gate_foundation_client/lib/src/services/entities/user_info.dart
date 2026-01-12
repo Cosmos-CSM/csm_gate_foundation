@@ -38,9 +38,4 @@ class UserInfo extends EntityBase<UserInfo> {
       },
     );
   }
-
-  @override
-  List<EntityInvalidation<UserInfo>> evaluate() {
-    return <EntityInvalidation<UserInfo>>[];
-  }
 }

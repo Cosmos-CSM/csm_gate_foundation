@@ -28,9 +28,9 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
           accentAlt: GateFoundationViewColorConstants.warmWhite,
         ),
         control: const ThemingData(
-          back: GateFoundationViewColorConstants.lightDark,
-          fore: Color(0xffdddddd),
-          accent: Color(0xff04548c),
+          back: GateFoundationViewColorConstants.oceanBlue,
+          fore: GateFoundationViewColorConstants.warmWhite,
+          accent: GateFoundationViewColorConstants.deepWine,
         ),
         controlError: const ThemingData(
           back: Color.fromARGB(255, 3, 5, 4),
@@ -48,6 +48,18 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
           back: GateFoundationViewColorConstants.darkGrey,
           fore: GateFoundationViewColorConstants.lightDark,
           accent: GateFoundationViewColorConstants.oceanBlue,
+        ),
+        categoryLayoutRibbonActionButton: const StateControlTheming(
+          main: InputControlTheming(
+            background: GateFoundationViewColorConstants.oceanBlue,
+            foreground: GateFoundationViewColorConstants.warmWhite,
+          ),
+          hoverStruct: InputControlTheming(
+            background: GateFoundationViewColorConstants.oceanBlueH,
+          ),
+          selectStruct: InputControlTheming(
+            background: GateFoundationViewColorConstants.oceanBlueH,
+          ),
         ),
       );
 }

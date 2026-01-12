@@ -22,16 +22,21 @@ class UsersEntityTable extends GateFoundationEntityTableBase<User, UsersEntityTa
       columns: <EntityTableColumnData<User>>[
         /// --> User
         EntityTableColumnData<User>(
-          title: 'User',
+          title: 'Username',
           factory: (User entity, int index, BuildContext buildContext) => entity.username,
         ),
 
-        /// --> Wildcard
+        /// --> User
         EntityTableColumnData<User>(
-          title: 'Wildcard',
-          factory: (User entity, int index, BuildContext buildContext) => entity.isMaster ? 'Yes' : 'No',
+          title: 'Type',
+          factory: (User entity, int index, BuildContext buildContext) => '${entity.type.name.toStartUpperCase()} (${entity.type.index})',
         ),
 
+        /// --> Is Master
+        EntityTableColumnData<User>(
+          title: 'Is Master',
+          factory: (User entity, int index, BuildContext buildContext) => entity.isMaster ? 'Yes' : 'No',
+        ),
         /// --> Name
         EntityTableColumnData<User>(
           title: 'Name',
@@ -40,14 +45,19 @@ class UsersEntityTable extends GateFoundationEntityTableBase<User, UsersEntityTa
 
         /// --> lastname
         EntityTableColumnData<User>(
-          title: 'Lastname',
+          title: 'Last Name',
           factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.lastName,
         ),
 
         /// --> Email
         EntityTableColumnData<User>(
-          title: 'Email',
+          title: 'EMail',
           factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.eMail,
+        ),
+        /// --> Phone number
+        EntityTableColumnData<User>(
+          title: 'Phone',
+          factory: (User entity, int index, BuildContext buildContext) => entity.userInfo.phone,
         ),
       ],
     );

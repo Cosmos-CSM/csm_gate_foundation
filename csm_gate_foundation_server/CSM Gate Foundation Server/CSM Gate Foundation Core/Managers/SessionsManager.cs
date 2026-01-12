@@ -103,6 +103,11 @@ public sealed class SessionsManager
         return await GenerateSession(sessionScope.authInput);
     }
 
+    public bool ValidateUserAction(string featureName, string actionName, HttpContext httpContext) {
+
+        return true;
+    }
+
     /// <summary>
     ///     Generates the <see cref="SessionData"/> from the given <paramref name="input"/>, checking if the account identity and password
     ///     matches solution stored ones.
@@ -117,19 +122,20 @@ public sealed class SessionsManager
         IUsersService usersService = serviceProvider.GetRequiredService<IUsersService>();
 
         try {
-            User userAccount = await usersService.Read(input.Username);
+            User user = await usersService.Read(input.Username);
 
-            if (!input.Password.SequenceEqual(userAccount.Password))
+            if (!input.Password.SequenceEqual(user.Password))
                 throw new SessionManagerError(AuthErrorEvents.NO_REQ_CONTEXT);
 
-            UserInfo sessionContact = userAccount.UserInfo;
+            UserInfo sessionContact = user.UserInfo;
 
             return new SessionData {
-                User = userAccount,
+                User = user,
                 Expiration = DateTime.Now.Add(_expirationGap),
                 Token = Guid.NewGuid(),
-                Wildcard = userAccount.IsMaster,
                 UserInfo = sessionContact,
+                Wildcard = user.IsMaster,
+                Permits = await usersService.ReadPermits(user.Id),
             };
         } catch (ServiceError<User> readException) when (readException.Event == ServiceErrorEvents.READ_UNFOUND) {
             throw new SessionManagerError(AuthErrorEvents.UNFOUND_USR);

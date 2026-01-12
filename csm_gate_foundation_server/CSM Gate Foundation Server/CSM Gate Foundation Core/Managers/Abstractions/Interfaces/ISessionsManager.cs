@@ -1,12 +1,14 @@
 ﻿using CSM_Gate_Foundation_Core.Core.Models;
 using CSM_Gate_Foundation_Core.Services.Models.Inputs;
 
+using CSM_Server_Core.Abstractions.Interfaces;
+
 namespace CSM_Gate_Foundation_Core.Managers.Abstractions.Interfaces;
 
 /// <summary>
 ///     Represents a server sessions manager.
 /// </summary>
-public interface ISessionsManager {
+public interface ISessionsManager : ISessionManager {
 
     /// <summary>
     ///     Authenticates an user from the given <paramref name="authInput"/> information.

@@ -1,13 +1,22 @@
-import 'package:csm_gate_foundation_client/src/services/entities/user.dart';
-import 'package:csm_gate_foundation_client/src/services/services_module.dart';
+import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
+import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundation_service_base.dart';
 
 /// Represents a server service communication for [User] entity operations.
-final class UsersService extends UsersServiceBase {
+class UsersService extends GateFoundationServiceBase implements IUsersService {
   /// Creates a new instance.
   UsersService(
-    super.host, {
+    Uri host, {
+    String? servicePath,
     super.client,
     super.headers,
-    super.servicePath,
-  });
+  }) : super(
+         host,
+         servicePath ?? "users",
+       );
+
+  @override
+  Future<GateFoundationServerResolver<ViewOutput<User>>> view(ViewInput<User> input, String auth) async {
+    final IResponseController controller = await postSecure('view', input, authToken: auth);
+    return GateFoundationServerResolver<ViewOutput<User>>(controller);
+  }
 }

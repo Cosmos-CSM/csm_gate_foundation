@@ -31,6 +31,9 @@ internal class Program {
 
                     // --> Singleton dependencies injected.
                     services.AddSingleton<ISessionsManager, SessionsManager>();
+                    services.AddSingleton<CSM_Server_Core.Abstractions.Interfaces.ISessionManager>(
+                            sProvier => sProvier.GetRequiredService<ISessionsManager>()
+                        );
 
                     // --> Security Database Service injection.
                     services.AddSecurityDatabaseServices();

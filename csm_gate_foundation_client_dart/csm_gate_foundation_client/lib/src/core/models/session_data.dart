@@ -11,6 +11,8 @@ final class SessionData implements IEncodable, IDecodable {
   /// [token] timemark expiration
   DateTime expiration = DateTime(0);
 
+  
+
   /// Generates a new [SessionData] instance.
   SessionData();
 

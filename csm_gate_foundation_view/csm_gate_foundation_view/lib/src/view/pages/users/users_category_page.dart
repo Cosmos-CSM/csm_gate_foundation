@@ -20,8 +20,7 @@ class UsersCategoryPage extends CategoryEntityViewPageBase<User, UsersEntityTabl
 
   @override
   List<IRoutingGraphData> composeRoutes() {
-    return <IRoutingGraphData>[
-    ];
+    return <IRoutingGraphData>[];
   }
 
   @override
@@ -30,8 +29,11 @@ class UsersCategoryPage extends CategoryEntityViewPageBase<User, UsersEntityTabl
   }
 
   @override
-  List<IActionsRibbonNode> composeRibbonController(UsersEntityTableAdatper adapter) {
+  List<IActionsRibbonNode> composeActions(UsersEntityTableAdatper adapter) {
     return <IActionsRibbonNode>[
+      ActionsRisbbonRefresh(
+        onRefresh: adapter.refresh,
+      ),
     ];
   }
 

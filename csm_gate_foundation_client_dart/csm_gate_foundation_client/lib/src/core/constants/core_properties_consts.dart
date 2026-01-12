@@ -1,10 +1,3 @@
-import 'package:csm_client_core/csm_client_core.dart';
-
-///
-final class ContextConstants {
-  static String sign = "TWSMF";
-}
-
 /// {constants} class.
 ///
 /// Stores constant values for {foundation} common properties access keys.
