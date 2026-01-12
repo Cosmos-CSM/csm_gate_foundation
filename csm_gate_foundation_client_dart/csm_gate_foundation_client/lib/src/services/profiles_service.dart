@@ -2,7 +2,6 @@ import 'dart:core' hide Uri;
 
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundation_service_base.dart';
-import 'package:csm_gate_foundation_client/src/services/abstractions/interfaces/iprofiles_service.dart';
 
 /// Represents a [Profile] entity operations service.
 class ProfilesService extends GateFoundationServiceBase implements IProfilesService {
