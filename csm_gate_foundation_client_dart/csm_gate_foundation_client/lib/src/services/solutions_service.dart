@@ -28,11 +28,11 @@ class SolutionsService extends GateFoundationServiceBase implements ISolutionsSe
   }
 
   @override
-  Future<GateFoundationServerResolver<BatchOperationOutput<Solution>>> create(List<Solution> solutions, String authToken) async {
+  Future<GateFoundationServerResolver<BatchOperationOutput<Solution>>> create(List<Solution> users, String authToken) async {
     return GateFoundationServerResolver<BatchOperationOutput<Solution>>(
       await postListSecure<Solution>(
         'create',
-        solutions,
+        users,
         authToken: authToken,
       ),
     );

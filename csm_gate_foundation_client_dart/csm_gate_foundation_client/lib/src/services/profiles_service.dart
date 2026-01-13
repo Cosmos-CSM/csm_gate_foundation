@@ -28,11 +28,11 @@ class ProfilesService extends GateFoundationServiceBase implements IProfilesServ
   }
 
   @override
-  Future<GateFoundationServerResolver<BatchOperationOutput<Profile>>> create(List<Profile> permits, String authToken) async {
+  Future<GateFoundationServerResolver<BatchOperationOutput<Profile>>> create(List<Profile> users, String authToken) async {
     return GateFoundationServerResolver<BatchOperationOutput<Profile>>(
       await postListSecure<Profile>(
         'create',
-        permits,
+        users,
         authToken: authToken,
       ),
     );

@@ -28,11 +28,11 @@ class PermitsService extends GateFoundationServiceBase implements IPermitsServic
   }
 
   @override
-  Future<GateFoundationServerResolver<BatchOperationOutput<Permit>>> create(List<Permit> permits, String authToken) async {
+  Future<GateFoundationServerResolver<BatchOperationOutput<Permit>>> create(List<Permit> users, String authToken) async {
     return GateFoundationServerResolver<BatchOperationOutput<Permit>>(
       await postListSecure<Permit>(
         'create',
-        permits,
+        users,
         authToken: authToken,
       ),
     );

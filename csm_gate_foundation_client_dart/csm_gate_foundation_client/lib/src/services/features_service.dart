@@ -28,11 +28,11 @@ class FeaturesService extends GateFoundationServiceBase implements IFeaturesServ
   }
 
   @override
-  Future<GateFoundationServerResolver<BatchOperationOutput<Feature>>> create(List<Feature> features, String authToken) async {
+  Future<GateFoundationServerResolver<BatchOperationOutput<Feature>>> create(List<Feature> users, String authToken) async {
     return GateFoundationServerResolver<BatchOperationOutput<Feature>>(
       await postListSecure<Feature>(
         'create',
-        features,
+        users,
         authToken: authToken,
       ),
     );

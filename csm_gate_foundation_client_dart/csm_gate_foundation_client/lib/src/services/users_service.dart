@@ -19,4 +19,15 @@ class UsersService extends GateFoundationServiceBase implements IUsersService {
     final IResponseController controller = await postSecure('view', input, authToken: auth);
     return GateFoundationServerResolver<ViewOutput<User>>(controller);
   }
+
+  @override
+  Future<GateFoundationServerResolver<BatchOperationOutput<User>>> create(List<User> users, String authToken) async {
+    return GateFoundationServerResolver<BatchOperationOutput<User>>(
+      await postListSecure<User>(
+        'create',
+        users,
+        authToken: authToken,
+      ),
+    );
+  }
 }
