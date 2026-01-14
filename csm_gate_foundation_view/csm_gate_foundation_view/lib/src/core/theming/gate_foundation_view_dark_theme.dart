@@ -30,7 +30,7 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
         control: const ThemingData(
           back: GateFoundationViewColorConstants.oceanBlue,
           fore: GateFoundationViewColorConstants.warmWhite,
-          accent: GateFoundationViewColorConstants.deepWine,
+          accent: GateFoundationViewColorConstants.oceanBlueH,
         ),
         controlError: const ThemingData(
           back: Color.fromARGB(255, 3, 5, 4),

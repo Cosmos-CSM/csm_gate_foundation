@@ -24,4 +24,9 @@ final class GateFoundationViewRouteConstants {
     'users',
     name: 'administration_users',
   );
+
+  static const RouteData administrationCreateUsersWhisperRoute = RouteData(
+    'users_create',
+    name: 'administration_users_create',
+  );
 }

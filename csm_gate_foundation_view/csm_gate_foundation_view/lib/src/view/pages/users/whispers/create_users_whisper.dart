@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_view/csm_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 /// Represents a { View } whisper to create users.
 final class CreateUsersWhisper extends ViewWhisperFormBase {
+  /// Form controller.
+  final CreateEntityFormController controller = CreateEntityFormController();
+
   /// Creates a new instance.
-  const CreateUsersWhisper()
+  CreateUsersWhisper()
     : super(
         title: 'Create Users',
       );
@@ -15,189 +20,232 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
   @override
   FutureOr<void> onPerform() {
     debugPrint('Called performing form whisper');
+    controller.create();
   }
 
   @override
-  Widget composeForm(BuildContext buildContext, Size windowSize, Size pageSize) {
+  Widget composeForm(GlobalKey<FormState> formState, BuildContext buildContext, Size windowSize, Size pageSize) {
     return CreateEntityForm<User, IUsersService>(
-      entityFactory: () => Account(),
-      controller: creationController,
-      buildEntityTag: (Account entity) {
-        return 'Account with name: ${entity.user}';
+      factory: () => User(),
+      authFactory: (BuildContext context) {
+        return '';
       },
-      recordDesigner: (Account entity, bool selected, bool valid) {
+      controller: controller,
+      errorDesigner: (User entity) => 'User with username: ${entity.username}',
+      recordDesigner: (User entity, bool selected, bool valid) {
         return CreateEntityFormRecord(
           selected: selected,
           fields: <CreateEntityFormRecordField>[
             /// --> User name.
             CreateEntityFormRecordField(
               label: '*Username',
-              value: entity.user,
+              value: entity.username,
             ),
 
             /// --> Wildcard.
             CreateEntityFormRecordField(
               label: '*Wildcard',
-              value: entity.wildcard.toString(),
-            ),
-
-            /// --> Profiles selected.
-            for (int i = 0; i < entity.profiles.length; i++)
-              CreateEntityFormRecordField(
-                label: 'Profile #${i + 1}',
-
-                value: entity.profiles[i].name,
-              ),
-
-            /// --> Permits.
-            CreateEntityFormRecordField(
-              label: 'Permits',
-              value: entity.profiles.length.toString(),
+              value: entity.isMaster.toString(),
             ),
 
             /// --> Contact name.
             CreateEntityFormRecordField(
               label: '*Name',
-              value: entity.contact.name,
+              value: entity.userInfo.name,
             ),
 
             /// --> Contact name.
             CreateEntityFormRecordField(
-              label: '*Lastname',
-              value: entity.contact.lastName,
+              label: '*Last Name',
+              value: entity.userInfo.lastName,
             ),
 
             /// --> Contact email.
             CreateEntityFormRecordField(
-              label: '*Email',
-              value: entity.contact.eMail,
+              label: '*eMail',
+              value: entity.userInfo.eMail,
             ),
 
             /// --> Contact lastname.
             CreateEntityFormRecordField(
               label: '*Phone',
-              value: entity.contact.phone,
-            ),
-
-            /// --> Contact email.
-            CreateEntityFormRecordField(
-              label: '*Email',
-              value: entity.contact.eMail,
+              value: entity.userInfo.phone,
             ),
           ],
         );
       },
-      formDesigner: (CreateEntityFormRecordReactor<Account>? itemState) {
+      formDesigner: (CreateEntityFormRecordReactor<User>? itemState, _) {
         final bool formDisabled = !(itemState == null);
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              spacing: 12,
+        return Column(
+          spacing: 16,
+          children: <Widget>[
+            /// --> User's [Username] & [Password] group.
+            FormInputGroup(
               children: <Widget>[
-                Row(
-                  spacing: 10,
-                  children: <Widget>[
-                    /// --> User name
-                    Expanded(
-                      child: TextInput(
-                        label: '*Name',
-                        isEnabled: formDisabled,
-                        maxLength: 50,
-                        controller: TextEditingController(
-                          text: itemState?.entity.user,
-                        ),
-                        onChanged: (String text) {
-                          Account account = itemState!.entity;
-                          account.user = text;
-                          itemState.react();
-                        },
-                      ),
-                    ),
+                /// --> User's [username]
+                TextInput(
+                  label: 'Username',
+                  isEnabled: formDisabled,
+                  maxLength: 50,
+                  validator: (String? val) {
+                    if (val == null || val.isEmpty) {
+                      return 'The username cannot be empty';
+                    }
 
-                    /// --> Password
-                    Expanded(
-                      child: TextInput(
-                        label: '*Password',
-                        isEnabled: formDisabled,
-                        controller: TextEditingController(
-                          text: itemState?.entity.password,
-                        ),
-                        onChanged: (String text) {
-                          Account account = itemState!.entity;
-                          account.password = text;
-                          itemState.react();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-
-                EntityFinderSelector<Contact, ContactsServiceI>(
-                  entityBuilder: () => Contact(),
-                  label: 'Select the contact information...',
-                  initialValue: itemState?.entity.contact,
-                  textBuilder: (Contact contact) {
-                    return '${contact.name} ${contact.lastName}';
+                    return null;
                   },
-                  onSelected: (Contact? solution) {
-                    itemState?.entity.contact = solution ?? Contact();
-                    itemState?.react();
-                  },
-                ),
-
-                FoldPanelWidget(
-                  title: 'Add Contact',
-                  child: _CreateWhisperContactsSection(
-                    itemState: itemState,
-                    isEnabled: formDisabled,
+                  controller: TextEditingController(
+                    text: itemState?.entity.username,
                   ),
-                ),
-                OptionsSelector<bool>(
-                  title: 'Wildcard',
-                  preSelected: <bool>[itemState!.entity.wildcard],
-                  options: <OptionsSelectorOption<bool>>[
-                    OptionsSelectorOption<bool>(
-                      title: 'Yes',
-                      value: true,
-                    ),
-                    OptionsSelectorOption<bool>(
-                      title: 'No',
-                      value: false,
-                    ),
-                  ],
-                  onSelect: (List<bool> selected) {
-                    Account account = itemState.entity;
-                    account.wildcard = selected.isNotEmpty ? selected.first : false;
+                  onChanged: (String text) {
+                    User user = itemState!.entity;
+                    user.username = text;
                     itemState.react();
                   },
                 ),
 
-                SelectableList<Profile, ProfilesServiceI>(
-                  heigth: 500,
-                  title: 'Available Profiles',
-                  entityBuilder: () => Profile(),
-                  initialValues: itemState.entity.profiles,
-                  tileTitle: (Profile profile) => profile.name,
-                  onSelect: (bool selected, Profile item) {
-                    itemState.react();
-                  },
-                ),
+                /// --> User's [password]
+                TextInput(
+                  label: 'Password',
+                  isEnabled: formDisabled,
+                  validator: (String? text) {
+                    if (text == null || text.isEmpty) {
+                      return 'The password cannot be empty';
+                    }
 
-                SelectableList<Permit, PermitsServiceI>(
-                  heigth: 500,
-                  title: 'Available Permits',
-                  entityBuilder: () => Permit(),
-                  initialValues: itemState.entity.permits,
-                  tileTitle: (Permit permit) => '${permit.solution.name} - ${permit.name}',
-                  onSelect: (bool selected, Permit item) {
+                    return null;
+                  },
+                  controller: TextEditingController(
+                    text: itemState?.entity.password,
+                  ),
+                  onChanged: (String text) {
+                    User account = itemState!.entity;
+                    account.password = text;
                     itemState.react();
                   },
                 ),
               ],
             ),
-          ),
+
+            /// --> user's [Type] & [IsMaster] group.
+            FormInputGroup(
+              children: <Widget>[
+                /// --> User's [Type].
+                EnumSelector<UserTypes>(
+                  label: 'User Type',
+                  isRequired: true,
+                  value: itemState?.entity.type,
+                  values: UserTypes.values,
+                  onSelect: (UserTypes value) {
+                    User user = itemState!.entity;
+                    user.type = value;
+                    itemState.react();
+                  },
+                ),
+
+                /// --> User's [IsMaster]
+                CheckboxInput(
+                  label: 'Is Master',
+                  startChecked: itemState?.entity.isMaster ?? false,
+                  onChanged: (bool? value) {
+                    User user = itemState!.entity;
+                    user.isMaster = value ?? false;
+                    itemState.react();
+                  },
+                ),
+              ],
+            ),
+
+            /// --> User's information section.
+            SectionBox(
+              title: 'User information',
+              outterPadding: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  spacing: 16,
+                  children: <Widget>[
+                    /// --> User's information [Name] & [Last Name] group.
+                    FormInputGroup(
+                      children: <Widget>[
+                        /// --> User's information [Name].
+                        TextInput(
+                          label: 'Name',
+                          isEnabled: formDisabled,
+                          validator: (String? text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Name cannot be empty';
+                            }
+
+                            return null;
+                          },
+                        ),
+
+                        /// --> User's information [Last Name].
+                        TextInput(
+                          label: 'Last Name',
+                          isEnabled: formDisabled,
+                          validator: (String? text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Last Name cannot be empty';
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+
+                    /// --> User's information [eMail] & [Phone] group.
+                    FormInputGroup(
+                      children: <Widget>[
+                        /// --> User's information [eMail].
+                        TextInput(
+                          label: 'eMail',
+                          isEnabled: formDisabled,
+                          validator: (String? text) {
+                            if (text == null || text.isEmpty) {
+                              return 'eMail cannot be empty';
+                            }
+
+                            return null;
+                          },
+                        ),
+
+                        /// --> User's information [Phone].
+                        TextInput(
+                          label: 'Phone Number',
+                          isEnabled: formDisabled,
+                          formatter: <TextInputFormatter>[
+                            MaskTextInputFormatter(
+                              mask: '(###) ###-####',
+                              filter: <String, RegExp>{
+                                "#": RegExp(r'[0-9]'),
+                              },
+                            ),
+                          ],
+                          validator: (String? text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Phone cannot be empty';
+                            }
+
+                            String digitsOnly = text.replaceAll(RegExp(r'\D'), '');
+
+                            if (digitsOnly.length < 10) {
+                              return 'Phone number must be 10 digits.';
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

@@ -27,6 +27,7 @@ dependencies:
       url: https://github.com/Cosmos-CSM/csm_gate_foundation
       path: csm_gate_foundation_client_dart/csm_gate_foundation_client/
   localstorage: ^6.0.0
+  mask_text_input_formatter: ^2.9.0
   
 
 dev_dependencies:
