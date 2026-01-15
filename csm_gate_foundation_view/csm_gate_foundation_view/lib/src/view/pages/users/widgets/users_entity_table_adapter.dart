@@ -13,7 +13,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints boxConstraints) {
         double drawerWidth = boxConstraints.maxWidth;
-        
+
         return EntityTableViewer(
           children: <Widget>[
             SizedBox(
@@ -105,7 +105,19 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
             ),
           ],
         );
-      }
+      },
+    );
+  }
+
+  @override
+  EntityTableAdapterEditor<User>? composeEditor() {
+    return EntityTableAdapterEditor<User>(
+      onUpdate: (BuildContext buildContext, User entity) {},
+      formBuilder: (BuildContext buildContext, User entity) {
+        return Column(
+          children: <Widget>[],
+        );
+      },
     );
   }
 }

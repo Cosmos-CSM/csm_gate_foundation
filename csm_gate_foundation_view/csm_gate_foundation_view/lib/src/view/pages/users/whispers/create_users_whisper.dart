@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
+import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
 import 'package:csm_view/csm_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/text_formatter.dart';
+import 'package:flutter/services.dart' hide TextInput;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 /// Represents a { View } whisper to create users.
@@ -11,15 +13,23 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
   /// Form controller.
   final CreateEntityFormController controller = CreateEntityFormController();
 
+  /// [UsersCategoryPage] inner entity table adapter.
+  final UsersEntityTableAdatper tableAdapter;
+
   /// Creates a new instance.
-  CreateUsersWhisper()
-    : super(
-        title: 'Create Users',
-      );
+  CreateUsersWhisper({
+    required this.tableAdapter,
+  }) : super(
+         title: 'Create Users',
+       );
+
+  @override
+  FutureOr<void> onClose() {
+    tableAdapter.refresh();
+  }
 
   @override
   FutureOr<void> onPerform() {
-    debugPrint('Called performing form whisper');
     controller.create();
   }
 
@@ -27,6 +37,7 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
   Widget composeForm(GlobalKey<FormState> formState, BuildContext buildContext, Size windowSize, Size pageSize) {
     return CreateEntityForm<User, IUsersService>(
       factory: () => User(),
+      onClose: onClose,
       authFactory: (BuildContext context) {
         return '';
       },
@@ -34,41 +45,54 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
       errorDesigner: (User entity) => 'User with username: ${entity.username}',
       recordDesigner: (User entity, bool selected, bool valid) {
         return CreateEntityFormRecord(
+          valid: valid,
           selected: selected,
-          fields: <CreateEntityFormRecordField>[
-            /// --> User name.
-            CreateEntityFormRecordField(
-              label: '*Username',
+          fields: <CreateEntityFormRecordField<Object>>[
+            /// --> User username.
+            CreateEntityFormRecordField<String>(
+              label: 'Username',
               value: entity.username,
             ),
 
-            /// --> Wildcard.
-            CreateEntityFormRecordField(
-              label: '*Wildcard',
-              value: entity.isMaster.toString(),
+            /// --> User password.
+            CreateEntityFormRecordField<String>(
+              label: 'Password',
+              value: List<String>.filled(utf8.decode(base64.decode(entity.password)).length, '*').join(''),
             ),
 
-            /// --> Contact name.
-            CreateEntityFormRecordField(
-              label: '*Name',
+            /// --> User type.
+            CreateEntityFormRecordField<String>(
+              label: 'Type',
+              value: entity.type.name.toStartUpperCase(),
+            ),
+
+            /// --> User is master.
+            CreateEntityFormRecordField<bool>(
+              label: 'Is Master',
+              value: entity.isMaster,
+            ),
+
+            /// --> User information name.
+            CreateEntityFormRecordField<String>(
+              label: 'Name',
               value: entity.userInfo.name,
             ),
 
-            /// --> Contact name.
-            CreateEntityFormRecordField(
-              label: '*Last Name',
+            /// --> User information last name.
+            CreateEntityFormRecordField<String>(
+              label: 'Last Name',
               value: entity.userInfo.lastName,
             ),
 
-            /// --> Contact email.
-            CreateEntityFormRecordField(
-              label: '*eMail',
+            /// --> User information email.
+            CreateEntityFormRecordField<String>(
+              label: 'eMail',
               value: entity.userInfo.eMail,
             ),
 
-            /// --> Contact lastname.
-            CreateEntityFormRecordField(
-              label: '*Phone',
+            /// --> User information phone.
+            CreateEntityFormRecordField<String>(
+              label: 'Phone',
               value: entity.userInfo.phone,
             ),
           ],
@@ -88,13 +112,7 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                   label: 'Username',
                   isEnabled: formDisabled,
                   maxLength: 50,
-                  validator: (String? val) {
-                    if (val == null || val.isEmpty) {
-                      return 'The username cannot be empty';
-                    }
-
-                    return null;
-                  },
+                  validator: (String? text) => ValidationUtils.stringValidator('Username', text),
                   controller: TextEditingController(
                     text: itemState?.entity.username,
                   ),
@@ -108,20 +126,17 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                 /// --> User's [password]
                 TextInput(
                   label: 'Password',
+                  isPrivate: true,
+                  autofillHints: <String>[],
                   isEnabled: formDisabled,
-                  validator: (String? text) {
-                    if (text == null || text.isEmpty) {
-                      return 'The password cannot be empty';
-                    }
-
-                    return null;
-                  },
+                  validator: (String? text) => ValidationUtils.stringValidator('Password', text),
                   controller: TextEditingController(
                     text: itemState?.entity.password,
                   ),
                   onChanged: (String text) {
                     User account = itemState!.entity;
-                    account.password = text;
+
+                    account.password = base64.encode(utf8.encode(text));
                     itemState.react();
                   },
                 ),
@@ -173,12 +188,12 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                         TextInput(
                           label: 'Name',
                           isEnabled: formDisabled,
-                          validator: (String? text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Name cannot be empty';
-                            }
+                          validator: (String? text) => ValidationUtils.stringValidator('Name', text),
+                          onChanged: (String text) {
+                            if (itemState?.entity == null) return;
 
-                            return null;
+                            itemState!.entity.userInfo.name = text;
+                            itemState.react();
                           },
                         ),
 
@@ -186,12 +201,12 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                         TextInput(
                           label: 'Last Name',
                           isEnabled: formDisabled,
-                          validator: (String? text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Last Name cannot be empty';
-                            }
+                          validator: (String? text) => ValidationUtils.stringValidator('Last Name', text),
+                          onChanged: (String text) {
+                            if (itemState?.entity == null) return;
 
-                            return null;
+                            itemState!.entity.userInfo.lastName = text;
+                            itemState.react();
                           },
                         ),
                       ],
@@ -203,19 +218,21 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                         /// --> User's information [eMail].
                         TextInput(
                           label: 'eMail',
+                          keyboardType: TextInputType.emailAddress,
                           isEnabled: formDisabled,
-                          validator: (String? text) {
-                            if (text == null || text.isEmpty) {
-                              return 'eMail cannot be empty';
-                            }
+                          validator: (String? text) => ValidationUtils.emailValidator('eMail', text),
+                          onChanged: (String text) {
+                            if (itemState?.entity == null) return;
 
-                            return null;
+                            itemState?.entity.userInfo.eMail = text;
+                            itemState?.react();
                           },
                         ),
 
                         /// --> User's information [Phone].
                         TextInput(
                           label: 'Phone Number',
+                          keyboardType: TextInputType.phone,
                           isEnabled: formDisabled,
                           formatter: <TextInputFormatter>[
                             MaskTextInputFormatter(
@@ -225,18 +242,12 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                               },
                             ),
                           ],
-                          validator: (String? text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Phone cannot be empty';
-                            }
+                          validator: (String? text) => ValidationUtils.phoneValidator('Phone', text),
+                          onChanged: (String text) {
+                            if (itemState?.entity == null) return;
 
-                            String digitsOnly = text.replaceAll(RegExp(r'\D'), '');
-
-                            if (digitsOnly.length < 10) {
-                              return 'Phone number must be 10 digits.';
-                            }
-
-                            return null;
+                            itemState?.entity.userInfo.phone = text;
+                            itemState?.react();
                           },
                         ),
                       ],

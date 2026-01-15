@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 ///
 /// (@category Entity Pages)
 class UsersCategoryPage extends CategoryEntityViewPageBase<User, UsersEntityTableAdatper> {
-
   /// Creates a new instance.
   UsersCategoryPage({
     required super.routeData,
@@ -28,7 +27,9 @@ class UsersCategoryPage extends CategoryEntityViewPageBase<User, UsersEntityTabl
         GateFoundationViewRouteConstants.administrationCreateUsersWhisperRoute,
         whisperOptions: WhisperOptions(),
         pageBuilder: (BuildContext ctx, RoutingData routeData) {
-          return CreateUsersWhisper();
+          return CreateUsersWhisper(
+            tableAdapter: adapter,
+          );
         },
       ),
     ];
@@ -43,7 +44,9 @@ class UsersCategoryPage extends CategoryEntityViewPageBase<User, UsersEntityTabl
   List<IActionsRibbonNode> composeActions(UsersEntityTableAdatper adapter) {
     return <IActionsRibbonNode>[
       ActionsRisbbonRefresh(
-        onRefresh: (_) => adapter.refresh,
+        onRefresh: (_) {
+          adapter.refresh();
+        },
       ),
       ActionsRisbbonCreate(
         onCreate: (BuildContext context) {

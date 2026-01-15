@@ -15,13 +15,19 @@ public class UsersService
     : ServiceBase<User, IUsersDepot>, IUsersService {
 
     /// <summary>
+    ///     <see cref="UserInfo"/> entity depot.
+    /// </summary>
+    readonly IUserInfosDepot _userInfosDepot;
+
+    /// <summary>
     ///     Creates a new instance.
     /// </summary>
     /// <param name="depot">
     ///     <see cref="User"/> based data depot dependency.
     /// </param>
-    public UsersService(IUsersDepot depot)
+    public UsersService(IUsersDepot depot, IUserInfosDepot userInfosDepot)
         : base(depot) {
+        _userInfosDepot = userInfosDepot;
     }
 
     public async Task<User> Read(string username) {
@@ -45,5 +51,19 @@ public class UsersService
 
     public Task<Permit[]> ReadPermits(long id) {
         return _depot.GetPermits(id);
+    }
+
+
+    public override async Task<BatchOperationOutput<User>> Create(User[] entities, bool sync = false) {
+        
+        List<UserInfo> infosToCreate = [];
+        foreach(User user in entities) {
+            if(user.UserInfo.Id == 0) 
+                infosToCreate.Add(user.UserInfo);
+        }
+
+        await _userInfosDepot.Create(infosToCreate);
+
+        return await base.Create(entities, sync);
     }
 }

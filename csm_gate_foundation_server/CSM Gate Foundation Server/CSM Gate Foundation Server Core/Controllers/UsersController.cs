@@ -30,4 +30,11 @@ public class UsersController
                     )
             );
     }
+
+    [HttpPost, Action("Create")]
+    public async Task<IActionResult> Create(User[] users) {
+        return Ok(
+                await _usersService.Create(users)
+            );
+    }
 }

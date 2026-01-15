@@ -3,6 +3,8 @@ import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundatio
 
 /// Represents an [Action] entity operations service.
 abstract interface class IActionsService extends GateFoundationServiceBase implements IService, IViewService<Action, GateFoundationServerResolver<ViewOutput<Action>>> {
+  
+  /// Creates a new instance.
   IActionsService(
     super.host,
     super.servicePath, {
