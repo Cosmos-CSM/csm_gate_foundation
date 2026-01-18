@@ -111,18 +111,9 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
     );
   }
 
-  /// Checks if the [editRef] entity has changed from its [original] values.
-  void canSaveChanges(User original, User editRef, void Function(bool canSave) toogleCanSave) {
-    bool canSave = false;
-
-    if (
-      original.username != editRef.username
-      || original.type != editRef.type
-      || 
-      || original.isMaster != editRef.isMaster
-    ) {
-      canSave = true;
-    }
+  void canSaveChanges(EntityTableAdapterEditorData<User> data) {
+    List<ObjectDifference> difference = data.entity.compare(data.entityRef);
+    data.toogleSaveButton(difference.isNotEmpty);
   }
 
   @override
@@ -143,7 +134,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
               controller: TextEditingController(
                 text: entity.username,
               ),
-              onChanged: (String text) => entity.username = text,
+              onChanged: (String text) {
+                entity.username = text;
+                canSaveChanges(data);
+              },
             ),
 
             /// User's [Type] input.

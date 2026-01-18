@@ -48,7 +48,9 @@ class User extends EntityBase<User> {
   }
 
   @override
-  List<ObjectDifference> compare(User ref, [List<ObjectDifference> aggregated = const <ObjectDifference>[]]) {
+  List<ObjectDifference> compare(User ref, [List<ObjectDifference>? aggregated]) {
+    aggregated ??= <ObjectDifference>[];
+
     if (username != ref.username) {
       aggregated.add(
         ObjectDifference(
