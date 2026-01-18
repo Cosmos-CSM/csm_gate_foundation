@@ -76,6 +76,11 @@ abstract class GateFoundationViewModuleBase extends ViewModuleBase {
     GateFoundationServer gateFoundationServer = GateFoundationServer(
       sign: 'CSMGF',
       isRelease: !kDebugMode,
+      prodHost: Uri(
+        'localhost',
+        '',
+        port: 5195,
+      ),
     );
 
     InjectorUtils.addSingleton(gateFoundationServer);

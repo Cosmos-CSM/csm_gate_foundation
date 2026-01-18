@@ -131,9 +131,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
             TextInput(
               label: 'Username',
               validator: (String? text) => ValidationUtils.stringValidator('Username', text),
-              controller: TextEditingController(
-                text: entity.username,
-              ),
+              initialValue: entity.username,
               onChanged: (String text) {
                 entity.username = text;
                 canSaveChanges(data);
@@ -187,9 +185,6 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                 /// --> User's information [eMail].
                 TextInput(
                   label: 'eMail',
-                  controller: TextEditingController(
-                    text: entity.userInfo.eMail,
-                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (String? text) => ValidationUtils.emailValidator('eMail', text),
                   onChanged: (String text) => entity.userInfo.eMail = text,

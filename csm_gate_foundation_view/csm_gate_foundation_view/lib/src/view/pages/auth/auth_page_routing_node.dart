@@ -36,16 +36,14 @@ final class AuthPageRoutingNode extends RoutingGraphNodeDataBase {
              onAuthSuccess:
                  onAuthSuccess ??
                  (BuildContext context, SessionData sessionData) async {
-                   (BuildContext context, SessionData serverSession) {
-                     IRouter router = InjectorUtils.get();
+                   IRouter router = InjectorUtils.get();
                      ISessionStorage sessionStorage = InjectorUtils.get();
 
                      sessionStorage.store(sessionData);
                      router.go(
                        context,
                        authRedirected,
-                     );
-                   };
+                   );
                  },
            );
          },
