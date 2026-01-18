@@ -23,13 +23,17 @@ public class UsersService
     ///     Creates a new instance.
     /// </summary>
     /// <param name="depot">
-    ///     <see cref="User"/> based data depot dependency.
+    ///     <see cref="User"/> depot dependency.
+    /// </param>
+    /// <param name="userInfosDepot">
+    ///     <see cref="UserInfo"/> depot dependency.
     /// </param>
     public UsersService(IUsersDepot depot, IUserInfosDepot userInfosDepot)
         : base(depot) {
         _userInfosDepot = userInfosDepot;
     }
 
+    /// <inheritdoc/>
     public async Task<User> Read(string username) {
         BatchOperationOutput<User> queryOutput = await _depot.Read(
                 new QueryInput<User, FilterQueryInput<User>> {
@@ -49,16 +53,16 @@ public class UsersService
         return queryOutput.Successes[0];
     }
 
+    /// <inheritdoc/>
     public Task<Permit[]> ReadPermits(long id) {
         return _depot.GetPermits(id);
     }
 
-
+    /// <inheritdoc/>
     public override async Task<BatchOperationOutput<User>> Create(User[] entities, bool sync = false) {
-        
         List<UserInfo> infosToCreate = [];
-        foreach(User user in entities) {
-            if(user.UserInfo.Id == 0) 
+        foreach (User user in entities) {
+            if (user.UserInfo.Id == 0)
                 infosToCreate.Add(user.UserInfo);
         }
 

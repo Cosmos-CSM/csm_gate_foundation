@@ -17,7 +17,7 @@ class UsersEntityTable extends GateFoundationEntityTableBase<User, UsersEntityTa
   @override
   Widget build(BuildContext context) {
     return EntityTable<User, GateFoundationServerResolver<ViewOutput<User>>, IUsersService>(
-      entityFactory: () => User(),
+      factory: () => User(),
       adapter: adapter,
       columns: <EntityTableColumnData<User>>[
         /// --> User

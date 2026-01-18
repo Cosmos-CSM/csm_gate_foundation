@@ -1,4 +1,3 @@
-
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 
 /// Represents an ecosystem authentication user.
@@ -46,6 +45,67 @@ class User extends EntityBase<User> {
         'userInfo': userInfo.encode(),
       },
     );
+  }
+
+  @override
+  List<ObjectDifference> compare(User ref, [List<ObjectDifference> aggregated = const <ObjectDifference>[]]) {
+    if (username != ref.username) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('username', String, username),
+          username,
+          ref.username,
+          null,
+        ),
+      );
+    }
+
+    if (password != ref.password) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('password', String, password),
+          password,
+          ref.password,
+          null,
+        ),
+      );
+    }
+
+    if (isMaster != ref.isMaster) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('isMaster', bool, isMaster),
+          isMaster,
+          ref.isMaster,
+          null,
+        ),
+      );
+    }
+
+    if (type != ref.type) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('type', UserTypes, type),
+          type,
+          ref.type,
+          null,
+        ),
+      );
+    }
+
+    List<ObjectDifference> userInfoDifferences = userInfo.compare(ref.userInfo);
+    if (userInfoDifferences.isNotEmpty) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('userInfo', UserInfo, userInfo),
+          null,
+          null,
+          userInfoDifferences,
+        ),
+      );
+    }
+
+    return super.compare(ref, aggregated);
   }
 }
 
