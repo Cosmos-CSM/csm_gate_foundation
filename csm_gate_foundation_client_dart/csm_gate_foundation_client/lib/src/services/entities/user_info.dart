@@ -38,4 +38,55 @@ class UserInfo extends EntityBase<UserInfo> {
       },
     );
   }
+
+  @override
+  List<ObjectDifference> compare(UserInfo ref, [List<ObjectDifference>? aggregated]) {
+    aggregated ??= <ObjectDifference>[];
+
+    if (name != ref.name) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('name', String, name),
+          name,
+          ref.name,
+          null,
+        ),
+      );
+    }
+
+    if (lastName != ref.lastName) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('lastName', String, lastName),
+          lastName,
+          ref.lastName,
+          null,
+        ),
+      );
+    }
+
+    if (eMail != ref.eMail) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('eMail', String, eMail),
+          eMail,
+          ref.eMail,
+          null,
+        ),
+      );
+    }
+
+    if (phone != ref.phone) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('phone', String, phone),
+          phone,
+          ref.phone,
+          null,
+        ),
+      );
+    }
+
+    return super.compare(ref, aggregated);
+  }
 }

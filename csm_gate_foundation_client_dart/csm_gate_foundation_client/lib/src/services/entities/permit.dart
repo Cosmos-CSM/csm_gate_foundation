@@ -57,4 +57,47 @@ final class Permit extends EntityBase<Permit> {
       },
     );
   }
+
+  @override
+  List<ObjectDifference> compare(Permit ref, [List<ObjectDifference>? aggregated]) {
+    aggregated ??= <ObjectDifference>[];
+
+    List<ObjectDifference> solutionDiffs = solution.compare(ref.solution);
+    if (solutionDiffs.isNotEmpty) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('solution', Solution, solution),
+          null,
+          null,
+          solutionDiffs,
+        ),
+      );
+    }
+
+    List<ObjectDifference> featureDiffs = feature.compare(ref.feature);
+    if (featureDiffs.isNotEmpty) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('feature', Feature, feature),
+          null,
+          null,
+          featureDiffs,
+        ),
+      );
+    }
+
+    List<ObjectDifference> actionDiffs = action.compare(ref.action);
+    if (actionDiffs.isNotEmpty) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('action', Action, action),
+          null,
+          null,
+          actionDiffs,
+        ),
+      );
+    }
+
+    return super.compare(ref, aggregated);
+  }
 }

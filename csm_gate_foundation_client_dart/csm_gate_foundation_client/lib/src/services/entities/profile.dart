@@ -6,4 +6,10 @@ import 'package:csm_client_core/csm_client_core.dart';
 final class Profile extends CatalogEntityBase<Profile> {
   /// Creates a new instance.
   Profile();
+
+  @override
+  List<ObjectDifference> compare(Profile ref, [List<ObjectDifference>? aggregated]) {
+    aggregated ??= <ObjectDifference>[];
+    return super.compare(ref, aggregated);
+  }
 }

@@ -142,7 +142,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
             EnumSelector<UserTypes>(
               value: entity.type,
               values: UserTypes.values,
-              onSelect: (UserTypes value) => entity.type = value,
+              onSelect: (UserTypes value) {
+                entity.type = value;
+                canSaveChanges(data);
+              },
             ),
 
             /// User's [Is Master] input
@@ -153,10 +156,14 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
               child: CheckboxInput(
                 label: 'Is Master',
                 startChecked: entity.isMaster,
-                onChanged: (bool? value) => entity.isMaster,
+                onChanged: (bool? value) {
+                  entity.isMaster = value ?? false;
+                  canSaveChanges(data);
+                },
               ),
             ),
 
+            /// Usre's [User Info] input.
             ExpandibleSection(
               title: 'User Info',
               spacing: 16,
@@ -169,7 +176,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                     text: entity.userInfo.name,
                   ),
                   validator: (String? text) => ValidationUtils.stringValidator('Name', text),
-                  onChanged: (String text) => entity.userInfo.name,
+                  onChanged: (String text) {
+                    entity.userInfo.name = text;
+                    canSaveChanges(data);
+                  },
                 ),
 
                 /// --> User's information [Last Name].
@@ -179,7 +189,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                     text: entity.userInfo.lastName,
                   ),
                   validator: (String? text) => ValidationUtils.stringValidator('Last Name', text),
-                  onChanged: (String text) => entity.userInfo.lastName = text,
+                  onChanged: (String text) {
+                    entity.userInfo.lastName = text;
+                    canSaveChanges(data);
+                  },
                 ),
 
                 /// --> User's information [eMail].
@@ -187,7 +200,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                   label: 'eMail',
                   keyboardType: TextInputType.emailAddress,
                   validator: (String? text) => ValidationUtils.emailValidator('eMail', text),
-                  onChanged: (String text) => entity.userInfo.eMail = text,
+                  onChanged: (String text) {
+                    entity.userInfo.eMail = text;
+                    canSaveChanges(data);
+                  },
                 ),
 
                 /// --> User's information [Phone].
@@ -206,7 +222,10 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                     ),
                   ],
                   validator: (String? text) => ValidationUtils.phoneValidator('Phone', text),
-                  onChanged: (String text) => entity.userInfo.phone = text,
+                  onChanged: (String text) {
+                    entity.userInfo.phone = text;
+                    canSaveChanges(data);
+                  },
                 ),
               ],
             ),

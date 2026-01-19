@@ -45,4 +45,21 @@ final class Solution extends NamedEntityBase<Solution> {
 
     return super.evaluate(errors);
   }
+
+  @override
+  List<ObjectDifference> compare(Solution ref, [List<ObjectDifference>? aggregated]) {
+    aggregated ??= <ObjectDifference>[];
+
+    if (sign != ref.sign) {
+      aggregated.add(
+        ObjectDifference(
+          PropertyInfo('sign', String, sign),
+          sign,
+          ref.sign,
+          null,
+        ),
+      );
+    }
+    return super.compare(ref, aggregated);
+  }
 }
