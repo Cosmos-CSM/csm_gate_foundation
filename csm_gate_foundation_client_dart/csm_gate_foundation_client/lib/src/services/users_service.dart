@@ -29,5 +29,16 @@ class UsersService extends GateFoundationServiceBase implements IUsersService {
         authToken: authToken,
       ),
     );
-  }  
+  }
+
+  @override
+  Future<UsersUpdateResolver> update(User user, String authToken) async {
+    return UsersUpdateResolver(
+      await postSecure(
+        'update',
+        user,
+        authToken: authToken,
+      ),
+    );
+  }
 }

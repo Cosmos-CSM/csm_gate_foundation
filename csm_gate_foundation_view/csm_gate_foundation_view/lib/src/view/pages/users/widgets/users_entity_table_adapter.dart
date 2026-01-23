@@ -1,7 +1,7 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
 import 'package:csm_view/csm_view.dart' hide LayoutBuilder;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Dialog;
 import 'package:flutter/services.dart' show TextInputFormatter;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -119,7 +119,20 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
   @override
   EntityTableAdapterEditor<User>? composeEditor() {
     return EntityTableAdapterEditor<User>(
-      onUpdate: (EntityTableAdapterEditorData<User> data) {},
+      onUpdate: (EntityTableAdapterEditorData<User> data) {
+        List<ObjectDifference> diffs = data.entity.compare(data.entityRef);
+        debugPrint('Updating user');
+
+        showDialog(
+          context: data.context,
+          builder: (BuildContext context) {
+            return Dialog(
+              title: 'Confirm $User update',
+              showCancelButton: true,
+            );
+          },
+        );
+      },
       formBuilder: (EntityTableAdapterEditorData<User> data) {
         User entity = data.entityRef;
 
@@ -172,9 +185,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                 /// --> User's information [Name].
                 TextInput(
                   label: 'Name',
-                  controller: TextEditingController(
-                    text: entity.userInfo.name,
-                  ),
+                  initialValue: entity.userInfo.name,
                   validator: (String? text) => ValidationUtils.stringValidator('Name', text),
                   onChanged: (String text) {
                     entity.userInfo.name = text;
@@ -185,9 +196,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                 /// --> User's information [Last Name].
                 TextInput(
                   label: 'Last Name',
-                  controller: TextEditingController(
-                    text: entity.userInfo.lastName,
-                  ),
+                  initialValue: entity.userInfo.lastName,
                   validator: (String? text) => ValidationUtils.stringValidator('Last Name', text),
                   onChanged: (String text) {
                     entity.userInfo.lastName = text;
@@ -199,6 +208,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                 TextInput(
                   label: 'eMail',
                   keyboardType: TextInputType.emailAddress,
+                  initialValue: entity.userInfo.eMail,
                   validator: (String? text) => ValidationUtils.emailValidator('eMail', text),
                   onChanged: (String text) {
                     entity.userInfo.eMail = text;
@@ -209,9 +219,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                 /// --> User's information [Phone].
                 TextInput(
                   label: 'Phone Number',
-                  controller: TextEditingController(
-                    text: entity.userInfo.phone,
-                  ),
+                  initialValue: entity.userInfo.phone,
                   keyboardType: TextInputType.phone,
                   formatter: <TextInputFormatter>[
                     MaskTextInputFormatter(

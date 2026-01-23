@@ -70,4 +70,24 @@ public class UsersService
 
         return await base.Create(entities, sync);
     }
+
+    /// <inheritdoc/>
+    public override async Task<UpdateOutput<User>> Update(UpdateInput<User> input) {
+        UserInfo userInfo = input.Entity.UserInfo;
+        if (userInfo.Id != 0) {
+            UpdateOutput<UserInfo> output = await _userInfosDepot.Update(
+                    new QueryInput<UserInfo, UpdateInput<UserInfo>> {
+                        Parameters = new UpdateInput<UserInfo> {
+                            Entity = userInfo,
+                            Create = input.Create,
+                        }
+                    }
+                );
+
+            userInfo = output.Updated;
+        }
+
+        input.Entity.UserInfo = userInfo;
+        return await base.Update(input);
+    }
 }
