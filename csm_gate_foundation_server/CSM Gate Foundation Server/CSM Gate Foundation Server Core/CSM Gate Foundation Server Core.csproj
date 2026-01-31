@@ -1,15 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <RootNamespace>CSM_Gate_Foundation_Server_Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>CSM_Gate_Foundation_Server</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CSM.Server.Core" Version="2.1.6" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CSM Gate Foundation Core\CSM Gate Foundation Core.csproj" />

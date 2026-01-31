@@ -49,6 +49,11 @@ final class GateFoundationViewDarkTheme extends GateFoundationViewThemeBase {
           fore: GateFoundationViewColorConstants.lightDark,
           accent: GateFoundationViewColorConstants.oceanBlue,
         ),
+        dialog: ThemingData(
+          back: GateFoundationViewColorConstants.lightDark,
+          fore: GateFoundationViewColorConstants.warmWhite,
+          accent: GateFoundationViewColorConstants.oceanBlueH,
+        ),
         categoryLayoutRibbonActionButton: const StateControlTheming(
           main: InputControlTheming(
             background: GateFoundationViewColorConstants.oceanBlue,

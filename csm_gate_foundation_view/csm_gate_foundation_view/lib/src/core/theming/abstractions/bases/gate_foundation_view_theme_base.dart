@@ -19,6 +19,7 @@ abstract class GateFoundationViewThemeBase extends ThemeDataBase implements IGat
     super.identifier, {
     required super.icon,
     required super.page,
+    required super.dialog,
     required super.control,
     required super.controlError,
     required super.iconBackground,

@@ -1,4 +1,4 @@
-using CSM_Gate_Foundation_Core.Managers;
+﻿using CSM_Gate_Foundation_Core.Managers;
 using CSM_Gate_Foundation_Core.Managers.Abstractions.Interfaces;
 using CSM_Gate_Foundation_Core.Services;
 using CSM_Gate_Foundation_Core.Services.Abstractions.Interfaces;
@@ -9,10 +9,29 @@ using CSM_Server_Core.Core.Models;
 using CSM_Server_Core.Core.Utils;
 using CSM_Server_Core.Middlewares;
 
-namespace CSM_Gate_Foundation_Server;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
-internal class Program {
-    static void Main(string[] args) {
+namespace CSM_Gate_Foundation_Core;
+
+/// <summary>
+///     Represents { Gate Foundation Core } initializer provider. 
+/// </summary>
+public static class GateFoundationCore {
+
+    /// <summary>
+    ///     Starts { Gate Foundation Core } server.
+    /// </summary>
+    /// <param name="args">
+    ///     System application arguments.
+    /// </param>
+    /// <param name="buildApp">
+    ///     Customization application builder process.
+    /// </param>
+    /// <param name="configureApp">
+    ///     Customization application configuration process.
+    /// </param>
+    public static void Start(string[] args, Action<WebApplicationBuilder>? buildApp = null, Action<WebApplication, ServerSettings>? configureApp = null) {
         ServerUtils.Start(
                 "CSMS",
                 new FramingMiddleware(
@@ -26,7 +45,7 @@ internal class Program {
 
                         }
                     ),
-                async (WebApplicationBuilder appBuilder, ServerSettings serverSettings) => {
+                async (appBuilder, serverSettings) => {
                     IServiceCollection services = appBuilder.Services;
 
                     // --> Singleton dependencies injected.
@@ -42,10 +61,21 @@ internal class Program {
                     // --> Injecting Gate Foundation services.
                     services.AddScoped<IAuthService, AuthService>();
                     services.AddScoped<IUsersService, UsersService>();
-                },
-                async (WebApplication webApp, ServerSettings serverSettings) => {
 
+
+                    // --> Adding package controllers.
+                    services
+                        .AddControllers()
+                        .AddApplicationPart(
+                            typeof(GateFoundationCore).Assembly
+                        );
+
+                    buildApp?.Invoke(appBuilder);
+                },
+                async (webApp, serverSettings) => {
+                    configureApp?.Invoke(webApp, serverSettings);
                 }
             );
     }
+
 }

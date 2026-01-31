@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSM.Security.Database.Core" Version="1.0.2" />
-    <PackageReference Include="CSM.Server.Core" Version="2.1.6" />
+    <PackageReference Include="CSM.Security.Database.Core" Version="1.0.3" />
+    <PackageReference Include="CSM.Server.Core" Version="2.1.7" />
   </ItemGroup>
 
 </Project>

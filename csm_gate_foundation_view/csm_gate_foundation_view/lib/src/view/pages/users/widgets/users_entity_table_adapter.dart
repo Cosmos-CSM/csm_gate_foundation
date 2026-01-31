@@ -1,7 +1,7 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
 import 'package:csm_view/csm_view.dart' hide LayoutBuilder;
-import 'package:flutter/material.dart' hide Dialog;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputFormatter;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -126,9 +126,8 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
         showDialog(
           context: data.context,
           builder: (BuildContext context) {
-            return Dialog(
-              title: 'Confirm $User update',
-              showCancelButton: true,
+            return UpdateEntityDialog<User>(
+              differences: diffs,
             );
           },
         );

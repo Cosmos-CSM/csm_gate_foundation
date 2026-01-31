@@ -1,7 +1,0 @@
-﻿{
-  "Tenant": "CSM",
-  "Signature": "CSMS",
-  "AllowedOrigins": [
-    "localhost"
-  ]
-}
