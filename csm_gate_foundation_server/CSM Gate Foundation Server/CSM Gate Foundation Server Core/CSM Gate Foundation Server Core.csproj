@@ -1,11 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>CSM_Gate_Foundation_Server_Core</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>CSM_Gate_Foundation_Server_Core</RootNamespace>
+		<PackageId>CSM.GateFoundation.Server.Core</PackageId>
+		<Version>0.0.1</Version>
+		<Authors>Renato Urrea</Authors>
+		<Company>Cosmos (CSM)</Company>
+		<RepositoryUrl>https://github.com/Cosmos-CSM/csm_gate_foundation</RepositoryUrl>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageReadmeFile>CHANGELOG.md</PackageReadmeFile>
+		<IsPackable>true</IsPackable>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="CHANGELOG.md" Pack="true" PackagePath="" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CSM Gate Foundation Core\CSM Gate Foundation Core.csproj" />
