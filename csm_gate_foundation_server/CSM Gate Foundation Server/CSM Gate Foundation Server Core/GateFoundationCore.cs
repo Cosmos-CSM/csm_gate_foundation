@@ -22,6 +22,9 @@ public static class GateFoundationCore {
     /// <summary>
     ///     Starts { Gate Foundation Core } server.
     /// </summary>
+    /// <param name="sign">
+    ///     [CSM] framework solution signature identifier.
+    /// </param>
     /// <param name="args">
     ///     System application arguments.
     /// </param>
@@ -31,9 +34,9 @@ public static class GateFoundationCore {
     /// <param name="configureApp">
     ///     Customization application configuration process.
     /// </param>
-    public static void Start(string[] args, Action<WebApplicationBuilder>? buildApp = null, Action<WebApplication, ServerSettings>? configureApp = null) {
+    public static void Start(string[] args, Action<WebApplicationBuilder>? buildApp = null, Action<WebApplication, ServerSettings>? configureApp = null, string sign = "CSMS") {
         ServerUtils.Start(
-                "CSMS",
+                sign,
                 new FramingMiddleware(
                         async (services) => {
 

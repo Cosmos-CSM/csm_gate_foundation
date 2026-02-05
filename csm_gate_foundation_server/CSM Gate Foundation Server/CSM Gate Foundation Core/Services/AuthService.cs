@@ -22,6 +22,7 @@ public class AuthService
         _sessionsManager = sessionManager;
     }
 
+    /// <inheritdoc/>
     public async Task<SessionData> Authenticate(AuthInput input) {
         return await _sessionsManager.Auth(input);
     }
