@@ -22,6 +22,15 @@ public class AuthController
         _authService = authService;
     }
 
+    /// <summary>
+    ///     HTTP service provider for <see cref="IAuthService.Authenticate"/> operation.
+    /// </summary>
+    /// <param name="input">
+    ///     Service input.
+    /// </param>
+    /// <returns>
+    ///     Service output.
+    /// </returns>
     [HttpPost]
     public async Task<IActionResult> Authenticate(AuthInput input) {
         return Ok(

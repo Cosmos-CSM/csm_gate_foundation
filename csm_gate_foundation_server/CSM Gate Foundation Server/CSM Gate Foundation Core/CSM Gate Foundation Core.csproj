@@ -4,7 +4,7 @@
 	  <TargetFramework>net10.0</TargetFramework>
 	  <RootNamespace>CSM_Gate_Foundation_Core</RootNamespace>
 	  <PackageId>CSM.GateFoundation.Core</PackageId>
-	  <Version>0.0.1</Version>
+	  <Version>1.0.0</Version>
 	  <Authors>Renato Urrea</Authors>
 	  <Company>Cosmos (CSM)</Company>
 	  <RepositoryUrl>https://github.com/Cosmos-CSM/csm_gate_foundation</RepositoryUrl>
@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="CSM.Security.Database.Core" Version="1.0.3" />
-    <PackageReference Include="CSM.Server.Core" Version="2.1.7" />
+    <PackageReference Include="CSM.Server.Core" Version="2.1.9" />
   </ItemGroup>
 
 </Project>

@@ -27,7 +27,7 @@ public enum AuthErrorEvents {
     UNAUTHORIZED,
 
     /// <summary>
-    ///     When the <see cref="IAuthManager.Auth(Services.Records.AuthInput)"/> requires the request context scope but is not being given.
+    ///     When the <see cref="Managers.Abstractions.Interfaces.ISessionsManager.Auth(Services.Models.Inputs.AuthInput)"/> requires the request context scope but is not being given.
     /// </summary>
     NO_REQ_CONTEXT,
 
@@ -56,7 +56,15 @@ public class SessionManagerError
         : base($"Session Manager error", reason, system) {
     }
 
+    /// <summary>
+    ///     Builds the current <see cref="SessionManagerError"/> advising contexts, determining wich advise to use.
+    /// </summary>
+    /// <returns>
+    ///     An advise contexts dictionary.
+    /// </returns>
     protected override Dictionary<AuthErrorEvents, string> BuildAdviseContext() {
+
+
         return new Dictionary<AuthErrorEvents, string> {
             { AuthErrorEvents.UNFOUND_USR, $"Identity not found" },
             { AuthErrorEvents.WRONG_PWD, $"Wrong password" },

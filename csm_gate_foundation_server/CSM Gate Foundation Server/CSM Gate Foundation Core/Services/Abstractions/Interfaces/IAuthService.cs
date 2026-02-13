@@ -12,7 +12,7 @@ public interface IAuthService
     : IService {
 
     /// <summary>
-    ///     Authenticates a given credentials subscribing the session into the current <see cref="AuthManager"/> context.
+    ///     Authenticates a given credentials subscribing the session into the current <see cref="ISessionManager"/> context.
     /// </summary>
     /// <param name="input">
     ///     Authentication credentials.

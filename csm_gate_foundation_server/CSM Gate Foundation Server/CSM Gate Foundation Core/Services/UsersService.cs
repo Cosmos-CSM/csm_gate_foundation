@@ -66,7 +66,7 @@ public class UsersService
                 infosToCreate.Add(user.UserInfo);
         }
 
-        await _userInfosDepot.Create(infosToCreate);
+        await _userInfosDepot.Create(infosToCreate, sync);
 
         return await base.Create(entities, sync);
     }
@@ -74,8 +74,7 @@ public class UsersService
     /// <inheritdoc/>
     public override async Task<UpdateOutput<User>> Update(UpdateInput<User> input) {
         UserInfo userInfo = input.Entity.UserInfo;
-        if (userInfo.Id != 0) {
-            UpdateOutput<UserInfo> output = await _userInfosDepot.Update(
+        UpdateOutput<UserInfo> output = await _userInfosDepot.Update(
                     new QueryInput<UserInfo, UpdateInput<UserInfo>> {
                         Parameters = new UpdateInput<UserInfo> {
                             Entity = userInfo,
@@ -84,10 +83,7 @@ public class UsersService
                     }
                 );
 
-            userInfo = output.Updated;
-        }
-
-        input.Entity.UserInfo = userInfo;
+        input.Entity.UserInfo = output.Updated;
         return await base.Update(input);
     }
 }

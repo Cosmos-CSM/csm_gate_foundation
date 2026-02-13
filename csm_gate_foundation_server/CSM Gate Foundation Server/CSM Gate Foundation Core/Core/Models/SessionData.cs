@@ -30,12 +30,12 @@ public record SessionData {
     public required UserInfo UserInfo { get; set; }
 
     /// <summary>
-    ///     Stores the permits the <see cref="user"/> has access to, only for the scoped <see cref="Solution"/> this session is related.
+    ///     Stores the permits the <see cref="User"/> has access to, only for the scoped <see cref="Solution"/> this session is related.
     /// </summary>
     public required Permit[] Permits { get; set; }
 
     /// <summary>
-    ///     <see cref="CSM_Security_Database_Core.Entities.User"> data
+    ///     <see cref="CSM_Security_Database_Core.Entities.User"/> data.
     /// </summary>
     [JsonIgnore]
     public User User { get; init; } = default!;

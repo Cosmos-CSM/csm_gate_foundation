@@ -83,6 +83,7 @@ public sealed class SessionsManager
         }
     }
 
+    /// <inheritdoc/>
     public async Task<SessionData> Auth(AuthInput input) {
 
         SessionData sessionData = await GenerateSession(input);
@@ -91,6 +92,7 @@ public sealed class SessionsManager
         return sessionData;
     }
 
+    /// <inheritdoc/>
     public async Task<SessionData> Get() {
         string token = TransactionAuthToken;
 
@@ -103,8 +105,8 @@ public sealed class SessionsManager
         return await GenerateSession(sessionScope.authInput);
     }
 
+    /// <inheritdoc/>
     public bool ValidateUserAction(string featureName, string actionName, HttpContext httpContext) {
-
         return true;
     }
 
@@ -145,8 +147,11 @@ public sealed class SessionsManager
     /// <summary>
     ///     Internaly generates and stores into the current manager sessions the given <see cref="AuthInput"/> information.
     /// </summary>
-    /// <param name="authInput">
+    /// <param name="input">
     ///     Authentication input information.
+    /// </param>
+    /// <param name="sessionData">
+    ///     Session data to store.
     /// </param>
     /// <exception cref="SessionManagerError">
     ///     For more details check innser <see cref="AuthErrorEvents"/>.
