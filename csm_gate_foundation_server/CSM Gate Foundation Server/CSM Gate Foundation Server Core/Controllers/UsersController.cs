@@ -7,7 +7,7 @@ using CSM_Server_Core.Core.Attributes;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CSM_Gate_Foundation_Server.Controllers;
+namespace CSM_Gate_Foundation_Server_Core.Controllers;
 
 /// <summary>
 ///     

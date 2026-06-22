@@ -3,7 +3,7 @@ using CSM_Gate_Foundation_Core.Services.Models.Inputs;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CSM_Gate_Foundation_Server.Controllers;
+namespace CSM_Gate_Foundation_Server_Core.Controllers;
 
 /// <summary>
 ///     Controller class for authorization services endpoints.

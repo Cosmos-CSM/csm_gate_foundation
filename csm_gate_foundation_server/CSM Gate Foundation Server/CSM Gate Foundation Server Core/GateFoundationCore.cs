@@ -12,7 +12,7 @@ using CSM_Server_Core.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CSM_Gate_Foundation_Core;
+namespace CSM_Gate_Foundation_Server_Core;
 
 /// <summary>
 ///     Represents { Gate Foundation Core } initializer provider. 
@@ -80,5 +80,4 @@ public static class GateFoundationCore {
                 }
             );
     }
-
 }
