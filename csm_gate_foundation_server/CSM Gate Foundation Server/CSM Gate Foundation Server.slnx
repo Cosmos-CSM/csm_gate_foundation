@@ -3,9 +3,9 @@
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="CSM Gate Foundation Core Integration Tests/CSM Gate Foundation Core Integration Tests.csproj" Id="deeb079e-9ddf-4222-b599-5919c4e2b970" />
+  <Project Path="CSM Gate Foundation Core Integration Tests/Integration Tests.csproj" Id="deeb079e-9ddf-4222-b599-5919c4e2b970" />
   <Project Path="CSM Gate Foundation Core Testing/CSM Gate Foundation Core Testing.csproj" Id="50db7065-ac51-4669-9cad-65bd6325ac98" />
-  <Project Path="CSM Gate Foundation Core Unit Tests/CSM Gate Foundation Core Unit Tests.csproj" Id="734c409d-4d70-4d90-9d9a-5dd90cf21958" />
+  <Project Path="CSM Gate Foundation Core Unit Tests/Unit Tests.csproj" Id="734c409d-4d70-4d90-9d9a-5dd90cf21958" />
   <Project Path="CSM Gate Foundation Core/CSM Gate Foundation Core.csproj" Id="6b8f2f8e-6905-4490-a07c-65ee934e6f82" />
   <Project Path="CSM Gate Foundation Server Core/CSM Gate Foundation Server Core.csproj" Id="c005eca7-0d93-4743-9337-2900b75ca815" />
 </Solution>
