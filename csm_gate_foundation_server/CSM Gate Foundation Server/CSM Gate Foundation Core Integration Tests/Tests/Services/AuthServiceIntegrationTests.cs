@@ -26,10 +26,11 @@ public class AuthServiceIntegrationTests
     : ServiceIntegrationTestsBase<IAuthService> {
 
     protected override IAuthService ServiceFactory() {
-        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
-        contextAccessor.HttpContext = new DefaultHttpContext();
+        HttpContextAccessor contextAccessor = new() {
+            HttpContext = new DefaultHttpContext()
+        };
 
-        IServiceProviderFactory<IServiceCollection> serviceProvider = new DefaultServiceProviderFactory();
+        DefaultServiceProviderFactory serviceProvider = new();
         IServiceCollection services = new ServiceCollection();
 
 
@@ -65,10 +66,10 @@ public class AuthServiceIntegrationTests
     [Fact]
     public async Task Authenticate_Success() {
         // Setting
-        UserInfo userInfo = Store(
+        UserInfo userInfo = await Store(
                 DraftUtils.UserInfo()
             );
-        User user = Store(
+        User user = await Store(
                 DraftUtils.User(
                         new User {
                             IsMaster = true,

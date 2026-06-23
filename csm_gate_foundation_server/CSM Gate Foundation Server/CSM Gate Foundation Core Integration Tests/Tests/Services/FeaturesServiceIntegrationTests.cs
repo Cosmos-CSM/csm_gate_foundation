@@ -43,15 +43,14 @@ public class FeaturesServiceIntegrationTests
 
     public override async Task Update_SingleEntity_UpdatesEntity() {
         // Setting
-        Feature feature = Store(RunEntityDraft());
+        Feature feature = await Store(RunEntityDraft());
 
         // Expectations
         string? oldDescription = feature.Description;
-        Permit expPermit = Store(DraftUtils.Permit());
+        Permit expPermit = await Store(DraftUtils.Permit());
 
         // Acting
         feature.Description = "New description random";
-        feature.Permits.Add(expPermit);
         UpdateOutput<Feature> actOutput = await _service.Update(
                 new UpdateInput<Feature> {
                     Entity = feature,
