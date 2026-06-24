@@ -6,10 +6,11 @@ using CSM_Server_Core.Abstractions.Bases;
 
 namespace CSM_Gate_Foundation_Core.Services;
 
+using ActionEntity = CSM_Security_Database_Core.Entities.Action;
+
 /// <inheritdoc cref="IActionsService"/>
 public class ActionsService
-    : ServiceBase<CSM_Security_Database_Core.Entities.Action, IActionsDepot>, IActionsService {
-
+    : ServiceBase<ActionEntity, IActionsDepot>, IActionsService {
 
     /// <summary>
     ///     Creates a new instance.
@@ -20,4 +21,6 @@ public class ActionsService
     public ActionsService(IActionsDepot depot)
         : base(depot) {
     }
+
+
 }
