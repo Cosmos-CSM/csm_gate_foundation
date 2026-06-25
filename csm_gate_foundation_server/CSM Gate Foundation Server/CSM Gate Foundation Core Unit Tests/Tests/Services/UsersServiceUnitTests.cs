@@ -2,12 +2,16 @@
 using CSM_Database_Core.Depots.Models;
 
 using CSM_Gate_Foundation_Core.Core.Errors;
+using CSM_Gate_Foundation_Core.Managers;
+using CSM_Gate_Foundation_Core.Managers.Abstractions.Interfaces;
 using CSM_Gate_Foundation_Core.Services;
 
 using CSM_Security_Database_Core.Depots.Abstractions.Interfaces;
 using CSM_Security_Database_Core.Entities;
 
 using CSM_Server_Core_Testing.Abstractions.Bases;
+
+using Microsoft.AspNetCore.Http;
 
 using Moq;
 
@@ -18,10 +22,15 @@ namespace CSM_Gate_Foundation_Core_Unit_Tests.Tests.Services;
 /// </summary>
 public class UsersServiceUnitTests
     : ServiceUnitTestsBase<User, IUsersDepot, UsersService> {
-
+     
     protected override UsersService ServiceFactory(IUsersDepot depotMock) {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         return new UsersService(
                 depotMock,
+                sessionsManager,
                 Mock.Of<IUserInfosDepot>()
             );
     }
@@ -32,6 +41,9 @@ public class UsersServiceUnitTests
     /// </summary>
     [Fact]
     public async Task Read_UserReadFromUsername_SuccessfulyGetsEntity() {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
         // --> Expectation
         User expectation = new() {
             Username = "expected_username"
@@ -65,6 +77,7 @@ public class UsersServiceUnitTests
 
         UsersService service = new(
                 usersDepotMock.Object,
+                sessionsManager,
                 Mock.Of<IUserInfosDepot>()
             );
 
@@ -86,6 +99,10 @@ public class UsersServiceUnitTests
     /// </summary>
     [Fact]
     public async Task Read_UserReadFromUsername_outputFailed() {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         // --> Expectation
         string expectedMessage = "Expected exception message";
         Exception expectation = new(expectedMessage);
@@ -113,6 +130,7 @@ public class UsersServiceUnitTests
 
         UsersService service = new(
                 usersDepotMock.Object,
+                sessionsManager,
                 Mock.Of<IUserInfosDepot>()
             );
 
@@ -140,6 +158,10 @@ public class UsersServiceUnitTests
     /// </summary>
     [Fact]
     public async Task Read_UserReadFromUsername_EntityNotFoundError() {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         // --> Mocking
         Mock<IUsersDepot> usersDepotMock = new();
         usersDepotMock.Setup(
@@ -157,6 +179,7 @@ public class UsersServiceUnitTests
 
         UsersService service = new(
                 usersDepotMock.Object,
+                sessionsManager,
                 Mock.Of<IUserInfosDepot>()
             );
 
@@ -184,6 +207,10 @@ public class UsersServiceUnitTests
     /// </summary>
     [Fact]
     public async Task ReadPermits_ReadPermitsFromUserId_CorrectlyGetsUserPermits() {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         // --> Expectation
         long userId = 1;
         Permit[] expectedPermits = [
@@ -204,7 +231,8 @@ public class UsersServiceUnitTests
             );
 
         UsersService service = new(
-            usersDepotMock.Object,
+                usersDepotMock.Object,
+                sessionsManager,
                 Mock.Of<IUserInfosDepot>()
             );
 
@@ -230,6 +258,10 @@ public class UsersServiceUnitTests
 
     /// <inheritdoc/>
     public override async Task Create_BatchEntityCreation(bool sync) {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         // --> Expectation
         User[] expectation = [
             new User {
@@ -267,6 +299,7 @@ public class UsersServiceUnitTests
 
         UsersService service = new(
                 usersDepotMock.Object,
+                sessionsManager,
                 userInfosDepotMock.Object
             );
 
@@ -315,6 +348,10 @@ public class UsersServiceUnitTests
 
     /// <inheritdoc/>
     public override async Task Update_UpdateFromInput(bool isToCreate) {
+        IHttpContextAccessor contextAccessor = new HttpContextAccessor();
+        contextAccessor.HttpContext = new DefaultHttpContext();
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
+
         // --> Expectation
         User expectation = new() {
             Id = 1,
@@ -365,6 +402,7 @@ public class UsersServiceUnitTests
 
         UsersService service = new(
                 usersDepotMock.Object,
+                sessionsManager,
                 userInfosDepotMock.Object
             );
 

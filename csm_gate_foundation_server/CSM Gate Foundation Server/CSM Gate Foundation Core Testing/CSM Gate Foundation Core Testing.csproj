@@ -2,16 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
-        <RootNamespace>CSM_Gate_Foundation_Core_Testing</RootNamespace>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>CSM_Gate_Foundation_Core_Testing</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CSM.Security.Database.Core" Version="2.0.0" />
-        <PackageReference Include="CSM.Security.Database.Testing" Version="2.0.0" />
-        <PackageReference Include="CSM.Server.Core.Testing" Version="5.0.0-rc.6" />
+        <PackageReference Include="CSM.Security.Database.Core" Version="3.1.0" />
+        <PackageReference Include="CSM.Security.Database.Testing" Version="3.0.0" />
+        <PackageReference Include="CSM.Server.Core.Testing" Version="5.0.0-rc.7" />
     </ItemGroup>
 
 </Project>

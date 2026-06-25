@@ -1,12 +1,19 @@
-﻿using CSM_Database_Core.Depots.Models;
+﻿using CSM_Database_Core.Core.Errors;
+using CSM_Database_Core.Depots.Models;
 
 using CSM_Gate_Foundation_Core.Core.Errors;
+using CSM_Gate_Foundation_Core.Core.Models;
+using CSM_Gate_Foundation_Core.Managers;
+using CSM_Gate_Foundation_Core.Managers.Abstractions.Interfaces;
 using CSM_Gate_Foundation_Core.Services.Abstractions.Interfaces;
 
 using CSM_Security_Database_Core.Depots.Abstractions.Interfaces;
 using CSM_Security_Database_Core.Entities;
 
 using CSM_Server_Core.Abstractions.Bases;
+using CSM_Server_Core.Abstractions.Interfaces;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace CSM_Gate_Foundation_Core.Services;
 
@@ -20,17 +27,24 @@ public class UsersService
     readonly IUserInfosDepot _userInfosDepot;
 
     /// <summary>
+    ///     <see cref="SessionsManager"/> User session manager.
+    /// </summary>
+    readonly ISessionsManager _sessionsManager;
+
+    /// <summary>
     ///     Creates a new instance.
     /// </summary>
     /// <param name="depot">
     ///     <see cref="User"/> depot dependency.
     /// </param>
+    /// <param name="sessionManager"> session manager dependency</param>
     /// <param name="userInfosDepot">
     ///     <see cref="UserInfo"/> depot dependency.
     /// </param>
-    public UsersService(IUsersDepot depot, IUserInfosDepot userInfosDepot)
+    public UsersService(IUsersDepot depot, ISessionsManager sessionManager, IUserInfosDepot userInfosDepot)
         : base(depot) {
         _userInfosDepot = userInfosDepot;
+        _sessionsManager = sessionManager;
     }
 
     /// <inheritdoc/>
@@ -56,6 +70,61 @@ public class UsersService
     /// <inheritdoc/>
     public Task<Permit[]> ReadPermits(long id) {
         return _depot.GetPermits(id);
+    }
+    /// <summary>
+    /// Get the current user's vendors. If the user is a master user, it will return all enabled vendors. 
+    /// Otherwise, it will return only the vendors associated with the user.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="DepotError{User}"></exception>
+    public async Task<ViewOutput<Vendor>> GetVendors() {
+        SessionData sessionData = await _sessionsManager.Get();
+        long accountId = sessionData.User.Id;
+
+        BatchOperationOutput<User> readOutput = await _depot.Read(
+                new QueryInput<User, FilterQueryInput<User>> {
+                    Parameters = new FilterQueryInput<User> {
+                        Behavior = FilteringBehaviors.First,
+                        Filter = (record) => record.Id == accountId,
+                    },
+                    PostProcessor = (query) => {
+                        return query
+                            .Include(a => a.Vendors);
+                    },
+                }
+            );
+
+        if (readOutput.SuccessesCount <= 0)
+            throw new DepotError<User>(DepotErrorEvents.UNFOUND);
+
+
+        if (readOutput.Failed && readOutput.Failures.Length != 0 && readOutput.Failures[0].Exception != null)
+            throw readOutput.Failures[0].Exception!;
+
+
+
+        if (readOutput.SuccessesCount > 0 && readOutput.Successes[0].IsMaster) {
+            ViewOutput<Vendor> output = new() {
+                Entities = [.. readOutput.Successes[0].Vendors],
+                Pages = 1,
+                Page = 1,
+                Count = readOutput.Successes[0].Vendors.Count,
+                Timestamp = DateTime.UtcNow,
+            };
+        }
+
+        // Vendor[] vendors = [.. _database.Vendors.Where(v => v.IsEnabled)];
+        Vendor[] vendors = [];
+        ViewOutput<Vendor> wildCardOutput = new() {
+            Entities = vendors,
+            Pages = 1,
+            Page = 1,
+            Count = vendors.Length,
+            Timestamp = DateTime.UtcNow,
+        };
+
+        return wildCardOutput;
+
     }
 
     /// <inheritdoc/>

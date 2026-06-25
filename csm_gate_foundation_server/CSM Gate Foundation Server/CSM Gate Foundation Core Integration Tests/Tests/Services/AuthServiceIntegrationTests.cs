@@ -36,10 +36,11 @@ public class AuthServiceIntegrationTests
         SecurityDatabase securityDatabase = new();
         IUsersDepot usersDepot = new UsersDepot(securityDatabase, Disposer);
         IUserInfosDepot userInfosDepot = new UserInfosDepot(securityDatabase, Disposer);
-
+        ISessionsManager sessionsManager = new SessionsManager(contextAccessor);
         services.AddScoped<IUsersService, UsersService>(
                 (_) => new UsersService(
                         usersDepot,
+                        sessionsManager,
                         userInfosDepot
                     )
             );
@@ -65,10 +66,10 @@ public class AuthServiceIntegrationTests
     [Fact]
     public async Task Authenticate_Success() {
         // Setting
-        UserInfo userInfo = Store(
+        UserInfo userInfo = await Store(
                 DraftUtils.UserInfo()
             );
-        User user = Store(
+        User user = await Store(
                 DraftUtils.User(
                         new User {
                             IsMaster = true,

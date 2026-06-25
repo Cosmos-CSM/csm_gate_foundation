@@ -45,14 +45,14 @@ public class ActionsServiceIntegrationTests
 
     public override async Task Update_SingleEntity_UpdatesEntity() {
         // Expectation
-        Action expAction = Store(RunEntityDraft());
+        Action expAction = await Store(RunEntityDraft());
         Permit expPermit = DraftUtils.Permit();
 
-        Store(expPermit.Action);
-        Store(expPermit.Feature);
-        Store(expPermit.Solution);
+        await Store(expPermit.Action);
+        await Store(expPermit.Feature);
+        await Store(expPermit.Solution);
 
-        expPermit = Store(expPermit);
+        expPermit = await Store(expPermit);
 
         string? oldDescription = expAction.Description;
         expAction.Description = "New description";

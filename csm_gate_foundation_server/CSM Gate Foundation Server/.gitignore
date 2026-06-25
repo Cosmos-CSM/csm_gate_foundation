@@ -4,6 +4,10 @@ obj/
 out/
 artifacts/
 
+## Testing
+*.runsettings
+*dev.connection.json
+
 ## Visual Studio cache/options
 .vs/
 *.user

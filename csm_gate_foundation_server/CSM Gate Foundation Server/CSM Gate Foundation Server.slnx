@@ -2,6 +2,8 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
+    <File Path="csms.dev.connection.json" />
+    <File Path="integration_tests.runsettings" />
   </Folder>
   <Project Path="CSM Gate Foundation Core Integration Tests/CSM Gate Foundation Core Integration Tests.csproj" Id="deeb079e-9ddf-4222-b599-5919c4e2b970" />
   <Project Path="CSM Gate Foundation Core Testing/CSM Gate Foundation Core Testing.csproj" Id="50db7065-ac51-4669-9cad-65bd6325ac98" />
