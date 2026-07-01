@@ -20,12 +20,14 @@ dependencies:
   csm_client_core: 
     git: 
       url: https://github.com/Cosmos-CSM/csm_client
+      ref: dart_fixes
       path: csm_client_core/
 
   csm_gate_foundation_client:
     git: 
       url: https://github.com/Cosmos-CSM/csm_gate_foundation
       path: csm_gate_foundation_client_dart/csm_gate_foundation_client/
+      
   localstorage: ^6.0.0
   mask_text_input_formatter: ^2.9.0
   

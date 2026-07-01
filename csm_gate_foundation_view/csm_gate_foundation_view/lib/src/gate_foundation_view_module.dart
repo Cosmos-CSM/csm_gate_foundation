@@ -1,4 +1,5 @@
-import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
+
+import '../csm_gate_foundation_view.dart';
 
 ///
 final class GateFoundationViewModule extends GateFoundationViewModuleBase {

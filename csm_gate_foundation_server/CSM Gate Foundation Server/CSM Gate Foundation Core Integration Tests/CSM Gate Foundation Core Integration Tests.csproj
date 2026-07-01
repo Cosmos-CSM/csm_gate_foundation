@@ -30,4 +30,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Include="csms.dev.connection.json" Condition="Exists('csms.dev.connection.json')" CopyToOutputDirectory="PreserveNewest" Pack="false" />
+	</ItemGroup>
+
 </Project>

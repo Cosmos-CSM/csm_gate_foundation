@@ -17,8 +17,7 @@ export 'src/gate_foundation_server_resolver.dart';
 export 'src/core/models/session_data.dart';
 
 //! --> Exporting [Entities]
-export 'src/services/entities/user.dart';
-export 'src/services/entities/user_info.dart';
+export 'src/services/entities/services_entities_module.dart';
 
 //! --> Exporting [Models] <--
 

@@ -6,3 +6,4 @@ export 'profile.dart';
 export 'solution.dart';
 export 'user.dart';
 export 'user_info.dart';
+export 'vendor.dart';

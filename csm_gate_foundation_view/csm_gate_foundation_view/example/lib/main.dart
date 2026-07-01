@@ -1,5 +1,6 @@
-import 'package:csm_gate_foundation_view/csm_gate_foundation_view.dart';
-import 'package:flutter/material.dart';
+
+
+import '../../lib/csm_gate_foundation_view.dart';
 
 void main() {
   runApp(
