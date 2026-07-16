@@ -5,12 +5,14 @@ using CSM_Security_Database_Core.Entities;
 using CSM_Server_Core.Abstractions.Bases;
 using CSM_Server_Core.Core.Attributes;
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace CSM_Gate_Foundation_Server_Core.Controllers;
 
 /// <summary>
 /// 
 /// </summary>
-[Feature("Features")]
+[ApiController, Route("[Controller]/[Action]"), Feature("Features")]
 public class FeaturesController
     : EntityControllerBase<IFeaturesService, Feature> {
 

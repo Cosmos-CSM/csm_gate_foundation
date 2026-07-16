@@ -16,6 +16,11 @@ namespace CSM_Gate_Foundation_Server.Controllers;
 public class UsersController
     : EntityControllerBase<IUsersService, User> {
 
+    readonly IUsersService usersService;
+
+    //[HttpGet, Action("GetVendors")]
+    //public async Task<IActionResult> GetVendors(long id) => Ok(await usersService.GetVendors());
+
 
     /// <summary>
     /// 
@@ -23,5 +28,6 @@ public class UsersController
     /// <param name="usersService"></param>
     public UsersController(IUsersService usersService)
         : base(usersService) {
+        this.usersService = usersService;
     }
 }
