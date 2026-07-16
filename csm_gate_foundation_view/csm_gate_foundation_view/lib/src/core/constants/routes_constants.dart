@@ -29,4 +29,29 @@ final class GateFoundationViewRouteConstants {
     'users_create',
     name: 'administration_users_create',
   );
+
+   //! --> Permits Routes
+  static const RouteData permitsPageRoute = RouteData(
+    'permits',
+    name: 'administation_permits',
+  );
+
+  static const RouteData permitsCreateWhisperRoute = RouteData(
+    'create-permits',
+    name: 'administration_permits_create',
+  );
+  //! <-- Permits Routes
+
+  //! --> Profiles Routes
+  static const RouteData profilesPageRoute = RouteData(
+    'profiles',
+    name: 'administration_profiles',
+  );
+
+  static const RouteData profilesCreateWhisperRoute = RouteData(
+    'create-profiles',
+    name: 'administration_profiles_create',
+  );
+  //! <-- Profiles Routes
+
 }

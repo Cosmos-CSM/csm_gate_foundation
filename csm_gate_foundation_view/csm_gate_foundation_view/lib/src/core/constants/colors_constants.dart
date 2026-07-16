@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 final class GateFoundationViewColorConstants {
   static const Color lightDark = Color(0xff343635);
   static const Color darkGrey = Color(0xff525254);
