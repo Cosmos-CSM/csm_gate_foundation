@@ -1,7 +1,25 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
+import 'package:csm_gate_foundation_client/src/core/constants/core_properties_consts.dart';
+import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.dart';
 
 /// Represents an ecosystem authentication user.
 class User extends EntityBase<User> {
+
+  /// [User.username] property key.
+  static const String kUsername = "username";
+  /// [User.password] property key.
+  static const String kPassword = "password";
+  /// [User.isMaster] property key.
+  static const String kIsMaster = "isMaster";
+  /// [User.type] property key.
+  static const String kType = "type";
+  /// [User.permits] property key.
+  static const String kPermits = "permits";
+  /// [User.profiles] property key.
+  static const String kProfiles = "profiles";
+  /// [User.vendors] property key.
+  static const String kVendors = "vendors";
+
   /// User auth username.
   String username = "";
 
@@ -17,19 +35,62 @@ class User extends EntityBase<User> {
   /// User's info data.
   UserInfo userInfo = UserInfo();
 
+  /// [Permit]s related to this accounts.
+  List<Permit> permits = <Permit>[];
+  
+  /// [Profile]s related to this accounts.
+  List<Profile> profiles = <Profile>[];
+
+  /// [Vendor]s related to this accounts.
+  List<Vendor> vendors = <Vendor>[];
+
   /// Creates a new instance.
   User();
 
   @override
   void decode(DataMap encode) {
-    username = encode.get('username');
-    isMaster = encode.get('isMaster');
-    int typeVal = encode.get('type');
+    username = encode.get(kUsername);
+    password = encode.get(kPassword);
+    isMaster = encode.get(kIsMaster);
+    int typeVal = encode.get(kType);
 
     type = UserTypes.values[typeVal];
-    DataMap userInfoDataMap = encode.get('userInfo');
+    DataMap userInfoDataMap = encode.get(FoundationCommonPropertyKeys.kUserInfo);
     userInfo = UserInfo();
     userInfo.decode(userInfoDataMap);
+
+    List<DataMap> permitsMaps = encode.getList(kPermits);
+    if (permitsMaps.isNotEmpty) {
+      permits = permitsMaps.map<Permit>(
+        (DataMap e) {
+          Permit permit = Permit();
+          permit.decode(e);
+          return permit;
+        },
+      ).toList();
+    }
+
+    List<DataMap> profilesMaps = encode.getList(kProfiles);
+    if (profilesMaps.isNotEmpty) {
+      profiles = profilesMaps.map<Profile>(
+        (DataMap e) {
+          Profile profile = Profile();
+          profile.decode(e);
+          return profile;
+        },
+      ).toList();
+    }
+
+    List<DataMap> vendorsMaps = encode.getList(kVendors);
+    if (vendorsMaps.isNotEmpty) {
+      vendors = vendorsMaps.map<Vendor>(
+        (DataMap e) {
+          Vendor vendor = Vendor();
+          vendor.decode(e);
+          return vendor;
+        },
+      ).toList();
+    }
 
     super.decode(encode);
   }
@@ -38,11 +99,14 @@ class User extends EntityBase<User> {
   DataMap encode([DataMap? entityObject]) {
     return super.encode(
       <String, Object?>{
-        'username': username,
-        'password': password,
-        'isMaster': isMaster,
-        'type': type.index,
-        'userInfo': userInfo.encode(),
+        kUsername: username,
+        kPassword: password,
+        kIsMaster: isMaster,
+        kType: type.index,
+        FoundationCommonPropertyKeys.kUserInfo: userInfo.encode(),
+        kPermits: permits.map((Permit e) => e.encode()).toList(),
+        kProfiles: profiles.map((Profile e) => e.encode()).toList(),
+        kVendors: vendors.map((Vendor e) => e.encode()).toList(),
       },
     );
   }
@@ -107,7 +171,103 @@ class User extends EntityBase<User> {
       );
     }
 
+    for(Permit permit in permits){
+      Permit? refPermit = ref.permits.firstWhere((Permit e) => e.id == permit.id, orElse: () => Permit());
+      List<ObjectDifference> permitDiff = permit.compare(refPermit);
+
+      if (permitDiff.isNotEmpty) {
+        aggregated.add(
+          ObjectDifference(
+            PropertyInfo(kPermits, Permit, permit),
+            permit,
+            refPermit,
+            permitDiff,
+          ),
+        );
+      }
+    }
+
+    for(Profile profile in profiles){
+      Profile? refProfile = ref.profiles.firstWhere((Profile e) => e.id == profile.id, orElse: () => Profile());
+      List<ObjectDifference> profilediff = profile.compare(refProfile);
+
+      if (profilediff.isNotEmpty) {
+        aggregated.add(
+          ObjectDifference(
+            PropertyInfo(kProfiles, Profile, profile),
+            profile,
+            refProfile,
+            profilediff,
+          ),
+        );
+      }
+    }
+  
+    for (Vendor vendor in vendors) {
+      Vendor? refVendor = ref.vendors.firstWhere((Vendor e) => e.id == vendor.id, orElse: () => Vendor());
+      List<ObjectDifference> vendorDiff = vendor.compare(refVendor);
+
+      if (vendorDiff.isNotEmpty) {
+        aggregated.add(
+          ObjectDifference(
+            PropertyInfo(kVendors, Vendor, vendor),
+            vendor,
+            refVendor,
+            vendorDiff,
+          ),
+        );
+      }
+    }
+
     return super.compare(ref, aggregated);
+  }
+
+   @override
+  List<EntityErrors<User>> evaluate(List<EntityErrors<User>> errors) {
+    errors = super.evaluate(errors);
+    if (id < BigInt.zero) {
+      errors.add(
+        EntityErrors<User>(
+          this,
+          PropertyInfo(CorePropertiesConsts.id, int, id),
+          'Pointer: $id, cannot be less than 0.',
+          '$id < 0',
+        ),
+      );
+    }
+
+    if (username.trim().isEmpty || username.length > 50) {
+      errors.add(
+        EntityErrors<User>(
+          this,
+          PropertyInfo(kUsername, String, username),
+          CoreEntityErrorReasonsConsts.invalidLength,
+          'Between 1 and 50 characters',
+        ),
+      );
+    }
+    
+    errors.validateDependency(this, userInfo);
+
+    if (permits.isNotEmpty) {
+      for (Permit permit in permits) {
+        errors.validateDependency(this, permit);
+      }
+    }
+
+    if (profiles.isNotEmpty) {
+      for (Profile profile in profiles) {
+        errors.validateDependency(this, profile);
+      }
+    }
+
+    if (vendors.isNotEmpty) {
+      for (Vendor vendor in vendors) {
+        errors.validateDependency(this, vendor);
+      }
+    }
+
+    return errors;
   }
 }
 

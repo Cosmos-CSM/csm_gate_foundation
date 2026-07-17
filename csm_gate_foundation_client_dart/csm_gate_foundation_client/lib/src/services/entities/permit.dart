@@ -1,17 +1,9 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
+import 'package:csm_gate_foundation_client/src/core/constants/core_properties_consts.dart';
 import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.dart';
 
 /// Represents a permit into the ecosystem, to trace security through actions into system.
 final class Permit extends CatalogEntityBase<Permit> {
-
-  /// [Permit.solution] property key.
-  static const String kSolution = 'solution';
-
-  /// [Permit.action] property key.
-  static const String kAction = 'action';
-
-  /// [Permit.feature] property key.
-  static const String kFeature = 'feature';
 
   /// [Solution] information.
   Solution solution = Solution();
@@ -30,19 +22,19 @@ final class Permit extends CatalogEntityBase<Permit> {
     solution =
         encode.getEntity(
           () => Solution(),
-          kSolution,
+          FoundationCommonPropertyKeys.kSolution,
         ) ??
         Solution();
     feature =
         encode.getEntity(
           () => Feature(),
-          kFeature,
+          FoundationCommonPropertyKeys.kFeature,
         ) ??
         Feature();
     action =
         encode.getEntity(
           () => Action(),
-          kAction,
+          FoundationCommonPropertyKeys.kAction,
         ) ??
         Action();
 
@@ -53,9 +45,9 @@ final class Permit extends CatalogEntityBase<Permit> {
   DataMap encode([DataMap? entityObject]) {
     return super.encode(
       <String, Object?>{
-        kSolution: solution.encode(),
-        kFeature: feature.encode(),
-        kAction: action.encode(),
+        FoundationCommonPropertyKeys.kSolution: solution.encode(),
+        FoundationCommonPropertyKeys.kFeature: feature.encode(),
+        FoundationCommonPropertyKeys.kAction: action.encode(),
       },
     );
   }
@@ -135,8 +127,8 @@ final class Permit extends CatalogEntityBase<Permit> {
           EntityErrors<Permit>(
             this,
             PropertyInfo(CorePropertiesConsts.description, String, description),
-            "Lenght: ${description!.length}, less than 200 characters or empty.",
-            "201 > length",
+            CoreEntityErrorReasonsConsts.invalidLength,
+            'Empty or between 1 and 200 characters',
           ),
         );
       }
@@ -147,8 +139,8 @@ final class Permit extends CatalogEntityBase<Permit> {
         EntityErrors<Permit>(
           this,
           PropertyInfo(CorePropertiesConsts.reference, String, reference),
-          'lentgh: ${reference.length}, must be exactly 8 characters',
-          'length == 8',
+          CoreEntityErrorReasonsConsts.invalidLength,
+          'Fixed to 8 characters',
         ),
       );
     }

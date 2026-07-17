@@ -5,16 +5,10 @@ import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.d
 ///
 /// [Entity] that represents a complex Feature storing different actions, this to determine Feature Scoped permits.
 /// only for authorization purposes.
-final class Feature extends NamedEntityBase<Feature> { 
+final class Feature extends CatalogEntityBase<Feature> { 
 
   /// [Feature.permits] property key.
   static const String kPermits = 'Permits';
-
-  /// [Feature.enabled] property key.
-  static const String kEnabled = 'enabled';
-
-  /// Enabled status.
-  bool enabled = false;
 
   /// [Permit]s information.
   List<Permit> permits = <Permit>[];
@@ -22,7 +16,6 @@ final class Feature extends NamedEntityBase<Feature> {
   @override
   void decode(DataMap encode) {
     super.decode(encode);
-    enabled = encode.get(kEnabled);
     List<DataMap> permitsMaps = encode.getList(kPermits);
     if (permitsMaps.isNotEmpty) {
       permits = permitsMaps.map<Permit>(
@@ -39,7 +32,6 @@ final class Feature extends NamedEntityBase<Feature> {
   DataMap encode([DataMap? entityObject]) {
     return super.encode(
       <String, Object?>{
-        kEnabled: enabled,
         kPermits: permits
             .map(
               (Permit e) => e.encode(),
@@ -68,8 +60,8 @@ final class Feature extends NamedEntityBase<Feature> {
         EntityErrors<Feature>(
           this,
           PropertyInfo(CorePropertiesConsts.name, String, name),
-          "Lenght: ${name.length}, must be between 1 and 100 characters.",
-          "101 > length > 0",
+          CoreEntityErrorReasonsConsts.invalidLength,
+          'Between 1 and 100 characters',
         ),
       );
     }
@@ -79,8 +71,8 @@ final class Feature extends NamedEntityBase<Feature> {
           EntityErrors<Feature>(
             this,
             PropertyInfo(CorePropertiesConsts.description, String, description),
-            "Lenght: ${description!.length}, less than 200 characters or empty.",
-            "201 > length",
+            CoreEntityErrorReasonsConsts.invalidLength,
+            'Empty or between 1 and 200 characters',
           ),
         );
       }
@@ -96,18 +88,7 @@ final class Feature extends NamedEntityBase<Feature> {
   
   @override
   List<ObjectDifference> compare(Feature ref, [List<ObjectDifference>? aggregated]) {
-    aggregated = super.compare(ref, aggregated);
-
-    if (enabled != ref.enabled) {
-      aggregated.add(
-        ObjectDifference(
-          PropertyInfo(kEnabled, bool, enabled),
-          enabled,
-          ref.enabled,
-          null,
-        ),
-      );
-    }
+    aggregated ??= <ObjectDifference>[];
 
     for(Permit permit in permits){
       Permit? refPermit = ref.permits.firstWhere((Permit e) => e.id == permit.id, orElse: () => Permit());
@@ -125,6 +106,6 @@ final class Feature extends NamedEntityBase<Feature> {
       }
     }
 
-    return aggregated;
+    return  super.compare(ref, aggregated);
   }
 }
