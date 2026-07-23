@@ -7,8 +7,8 @@ import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundatio
 class ProfilesService extends GateFoundationServiceBase implements IProfilesService {
   /// Creates a new instance.
   ProfilesService(
-    Uri host,
-    String? servicePath, {
+    Uri host, {
+    String? servicePath,
     super.client,
     super.headers,
   }) : super(

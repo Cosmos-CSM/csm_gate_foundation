@@ -1,6 +1,10 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.dart';
 
+
+/// [Feature] default builder.
+Feature featureBuilder() => Feature();
+
 /// {implementation} class for an [IEntity].
 ///
 /// [Entity] that represents a complex Feature storing different actions, this to determine Feature Scoped permits.
@@ -12,6 +16,9 @@ final class Feature extends CatalogEntityBase<Feature> {
 
   /// [Permit]s information.
   List<Permit> permits = <Permit>[];
+
+  /// Creates a new instance.
+  Feature();
   
   @override
   void decode(DataMap encode) {

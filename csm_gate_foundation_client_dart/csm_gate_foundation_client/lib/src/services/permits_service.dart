@@ -7,8 +7,8 @@ import 'package:csm_gate_foundation_client/src/abstractions/bases/gate_foundatio
 class PermitsService extends GateFoundationServiceBase implements IPermitsService {
   /// Creates a new service.
   PermitsService(
-    Uri host,
-    String? servicePath, {
+    Uri host, {
+    String? servicePath,
     super.client,
     super.headers,
   }) : super(

@@ -2,6 +2,9 @@ import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_client/src/core/constants/core_properties_consts.dart';
 import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.dart';
 
+/// [Permit] default builder.
+Permit permitBuilder() => Permit();
+
 /// Represents a permit into the ecosystem, to trace security through actions into system.
 final class Permit extends CatalogEntityBase<Permit> {
 

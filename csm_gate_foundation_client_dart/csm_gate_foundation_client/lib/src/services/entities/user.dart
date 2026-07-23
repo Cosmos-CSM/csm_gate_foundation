@@ -2,6 +2,9 @@ import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_client/src/core/constants/core_properties_consts.dart';
 import 'package:csm_gate_foundation_client/src/core/utilities/entity_utilities.dart';
 
+/// [User] default builder.
+User userBuilder() => User();
+
 /// Represents an ecosystem authentication user.
 class User extends EntityBase<User> {
 
