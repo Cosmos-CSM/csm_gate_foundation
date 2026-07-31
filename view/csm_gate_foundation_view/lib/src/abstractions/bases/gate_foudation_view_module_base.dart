@@ -17,11 +17,15 @@ abstract class GateFoundationViewModuleBase extends ViewModuleBase {
   /// Solution module signature identificator.
   final String signature;
 
+  /// Server communication object, 
+  final GateFoundationServer? _gateFoundationServer;
+
   /// Creates a new instance.
   const GateFoundationViewModuleBase({
     super.key,
     required this.signature,
-  });
+    GateFoundationServer? gateFoundationServer,
+  }) : _gateFoundationServer = gateFoundationServer;
 
   /// Provides authentication user for development purposes ignoring login page and moving forward to the system home page.
   @protected
@@ -73,13 +77,15 @@ abstract class GateFoundationViewModuleBase extends ViewModuleBase {
     await initLocalStorage();
 
     /// --> Initializing { Gate Foundation Server Client }
-    GateFoundationServer gateFoundationServer = GateFoundationServer(
+    GateFoundationServer gateFoundationServer =
+        _gateFoundationServer ??
+        GateFoundationServer(
       sign: 'CSMGF',
       isRelease: !kDebugMode,
-      prodHost: Uri(
+          devHost: Uri(
         'localhost',
         '',
-        port: 5195,
+            port: 7220,
       ),
     );
 

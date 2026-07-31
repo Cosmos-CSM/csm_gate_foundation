@@ -4,9 +4,9 @@ using CSM_Security_Database_Core.Depots.Abstractions.Interfaces;
 
 using CSM_Server_Core.Abstractions.Bases;
 
-namespace CSM_Gate_Foundation_Core.Services;
-
 using ActionEntity = CSM_Security_Database_Core.Entities.Action;
+
+namespace CSM_Gate_Foundation_Core.Services;
 
 /// <inheritdoc cref="IActionsService"/>
 public class ActionsService
@@ -21,6 +21,4 @@ public class ActionsService
     public ActionsService(IActionsDepot depot)
         : base(depot) {
     }
-
-
 }

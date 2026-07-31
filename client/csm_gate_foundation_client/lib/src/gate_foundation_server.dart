@@ -23,7 +23,7 @@ final class GateFoundationServer extends ServerBase {
              Uri(
                'localhost',
                '',
-               port: 5195,
+               port: 7220,
              ),
          isRelease: isRelease,
        ) {

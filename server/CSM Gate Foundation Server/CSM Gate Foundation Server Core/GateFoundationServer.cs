@@ -15,9 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CSM_Gate_Foundation_Server_Core;
 
 /// <summary>
-///     Represents { Gate Foundation Core } initializer provider. 
+///     Represents { Gate Foundation Server } initializer provider. 
 /// </summary>
-public static class GateFoundationCore {
+public static class GateFoundationServer {
 
     /// <summary>
     ///     Starts { Gate Foundation Core } server.
@@ -70,7 +70,7 @@ public static class GateFoundationCore {
                     services
                         .AddControllers()
                         .AddApplicationPart(
-                            typeof(GateFoundationCore).Assembly
+                            typeof(GateFoundationServer).Assembly
                         );
 
                     buildApp?.Invoke(appBuilder);
