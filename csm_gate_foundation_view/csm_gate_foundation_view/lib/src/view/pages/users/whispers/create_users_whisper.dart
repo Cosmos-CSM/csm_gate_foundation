@@ -171,6 +171,33 @@ final class CreateUsersWhisper extends ViewWhisperFormBase {
                 ),
               ],
             ),
+            
+            /// --> User's [Profiles] & [Permits] group.
+            FormInputGroup(
+              children: <Widget>[
+                SelectableListAsync<Profile, ProfilesServiceI>(
+                    height: 500,
+                    title: 'Available Profiles',
+                    entityBuilder: () => Profile(),
+                    initialValues: itemState.entity.profiles,
+                    tileTitle:(Profile profile) => profile.name,
+                    onSelect:(bool selected, Profile item) {
+                      itemState.react();
+                    },
+                  ),
+            
+                  SelectableListAsync<Permit, PermitsServiceI>(
+                    height: 500,
+                    title: 'Available Permits',
+                    entityBuilder: () => Permit(),
+                    initialValues: itemState.entity.permits,
+                    tileTitle:(Permit permit) => '${permit.solution.name} - ${permit.name}',
+                    onSelect:(bool selected, Permit item) {
+                      itemState.react();
+                    },
+                  ),
+              ],
+            ),
 
             /// --> User's information section.
             SectionBox(

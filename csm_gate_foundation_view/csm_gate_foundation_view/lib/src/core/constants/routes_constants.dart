@@ -54,4 +54,16 @@ final class GateFoundationViewRouteConstants {
   );
   //! <-- Profiles Routes
 
+    //! --> Features Routes
+  static const RouteData featuresPageRoute = RouteData(
+    'features',
+    name: 'administration_profiles',
+  );
+
+  static const RouteData featuresCreateWhisperRoute = RouteData(
+    'create-features',
+    name: 'administration_features_create',
+  );
+  //! <-- Profiles Routes
+
 }

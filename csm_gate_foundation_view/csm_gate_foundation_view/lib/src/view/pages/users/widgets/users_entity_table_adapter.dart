@@ -18,6 +18,11 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
 
         return EntityTableViewer(
           children: <Widget>[
+            /// --> created timestamp
+            PropertyViewer<String>(
+              label: 'Timestamp',
+              value: entity.timestamp.toLocal().toString(),
+            ),
             SizedBox(
               width: drawerWidth,
               child: Wrap(
@@ -51,6 +56,38 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                   ),
                 ],
               ),
+            ),
+
+            ExpandibleSection(
+              title: 'Access level details',
+              children: <Widget>[
+                SizedBox(
+                  width: drawerWidth,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    runAlignment: WrapAlignment.spaceEvenly,
+                    children: <Widget>[
+                      /// Profiles list
+                      ListViewer<Profile>(
+                        title: 'Profiles', 
+                        tilesContent: entity.profiles,
+                        tileTitle: (Profile set) {
+                          return set.name;
+                        },
+                      ),
+
+                      /// Permits list
+                      ListViewer<Permit>(
+                        title: 'Permits', 
+                        tilesContent: entity.permits,
+                        tileTitle: (Permit set) {
+                          return '${set.solution.name} - ${set.name}';
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
 
             ExpandibleSection(
@@ -175,7 +212,7 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
               ),
             ),
 
-            /// Usre's [User Info] input.
+            /// User's [User Info] input.
             ExpandibleSection(
               title: 'User Info',
               spacing: 16,
@@ -233,6 +270,24 @@ final class UsersEntityTableAdatper extends GateFoundationEntityTableAdapterBase
                     entity.userInfo.phone = text;
                     canSaveChanges(data);
                   },
+                ),
+                
+                SelectableListAsync<Profile, ProfilesServiceI>(
+                  height: 350,
+                  title: 'Available Profiles',
+                  entityBuilder: () => Profile(),
+                  initialValues: data.entity.profiles,
+                  tileTitle: (Profile profile) => profile.name, 
+                  onSelect: (bool selected, Profile item) {  },
+                ),
+
+                SelectableListAsync<Permit, PermitsServiceI>(
+                  height: 350,
+                  title: 'Available Permits',
+                  entityBuilder: () => Permit(),
+                  initialValues: data.entity.permits,
+                  tileTitle: (Permit permit) => '${permit.solution.name} - ${permit.name}', 
+                  onSelect: (bool selected, Permit item) {  },
                 ),
               ],
             ),
