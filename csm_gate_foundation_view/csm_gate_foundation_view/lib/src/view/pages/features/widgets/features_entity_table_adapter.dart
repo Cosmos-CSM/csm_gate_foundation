@@ -70,75 +70,72 @@ final class FeaturesEntityTableAdapter extends GateFoundationEntityTableAdapterB
       },
 
       formBuilder:(EntityTableAdapterEditorData<Feature> data) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Column(
-            spacing: 20,
-            children: <Widget>[
-
-              const SectionDivider(text: 'Permit details'),
-
-              TextInput(
-                width: double.infinity,
-                label: 'Timestamp',
-                isEnabled: false,
-                controller: TextEditingController(
-                  text: data.entity.timestamp.fullDate,
-                ),
+        return Column(
+          spacing: 20,
+          children: <Widget>[
+        
+            const SectionDivider(text: 'Permit details'),
+        
+            TextInput(
+              width: double.infinity,
+              label: 'Timestamp',
+              isEnabled: false,
+              controller: TextEditingController(
+                text: data.entity.timestamp.fullDate,
               ),
-
-              TextInput(
-                width: double.infinity,
-                label: '*Name',
-                maxLength: 100,
-                controller: TextEditingController(
-                  text: data.entity.name,
-                ),
-                onChanged: (String text) {
-                  data.entity.name = text;
-                },
+            ),
+        
+            TextInput(
+              width: double.infinity,
+              label: '*Name',
+              maxLength: 100,
+              controller: TextEditingController(
+                text: data.entity.name,
               ),
-
-              TextInput(
-                width: double.infinity,
-                label: 'Description',
-                maxLength: 200,
-                controller: TextEditingController(
-                  text: data.entity.description,
-                ),
-                onChanged: (String text) {
-                  data.entity.description = text.cleaned;
-                },
+              onChanged: (String text) {
+                data.entity.name = text;
+              },
+            ),
+        
+            TextInput(
+              width: double.infinity,
+              label: 'Description',
+              maxLength: 200,
+              controller: TextEditingController(
+                text: data.entity.description,
               ),
-
-              TextInput(
-                width: double.infinity,
-                label: 'Reference',
-                maxLength: 8,
-                controller: TextEditingController(
-                  text: data.entity.reference,
-                ),
-                onChanged: (String text) {
-                  data.entity.reference = text.cleaned;
-                },
+              onChanged: (String text) {
+                data.entity.description = text.cleaned;
+              },
+            ),
+        
+            TextInput(
+              width: double.infinity,
+              label: 'Reference',
+              maxLength: 8,
+              controller: TextEditingController(
+                text: data.entity.reference,
               ),
-
-              SelectableListAsync<Permit, IPermitsService>(
-                title: 'Available Permits',
-                entityBuilder: () => Permit(),
-                initialValues: data.entity.permits,
-                tileTitle:(Permit permit) => '${permit.solution.name} - ${permit.name}',
-                onSelect:(bool selected, Permit item) {
-                  if(selected){
-                    if(data.entity.permits.contains(item)) return;
-                    data.entity.permits.add(item);
-                    return;
-                  }
-                  data.entity.permits.remove(item);
-                },
-              ),
-            ],
-          ),
+              onChanged: (String text) {
+                data.entity.reference = text.cleaned;
+              },
+            ),
+        
+            SelectableListAsync<Permit, IPermitsService>(
+              title: 'Available Permits',
+              entityBuilder: () => Permit(),
+              initialValues: data.entity.permits,
+              tileTitle:(Permit permit) => '${permit.solution.name} - ${permit.name}',
+              onSelect:(bool selected, Permit item) {
+                if(selected){
+                  if(data.entity.permits.contains(item)) return;
+                  data.entity.permits.add(item);
+                  return;
+                }
+                data.entity.permits.remove(item);
+              },
+            ),
+          ],
         );
       },
     );

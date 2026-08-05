@@ -36,7 +36,7 @@ final class GateFoundationViewRouteConstants {
     name: 'administation_permits',
   );
 
-  static const RouteData permitsCreateWhisperRoute = RouteData(
+  static const RouteData administrationCreatePermitsWhisperRoute = RouteData(
     'create-permits',
     name: 'administration_permits_create',
   );
@@ -48,7 +48,7 @@ final class GateFoundationViewRouteConstants {
     name: 'administration_profiles',
   );
 
-  static const RouteData profilesCreateWhisperRoute = RouteData(
+  static const RouteData administationCreateProfilesWhisperRoute = RouteData(
     'create-profiles',
     name: 'administration_profiles_create',
   );
@@ -60,7 +60,7 @@ final class GateFoundationViewRouteConstants {
     name: 'administration_profiles',
   );
 
-  static const RouteData featuresCreateWhisperRoute = RouteData(
+  static const RouteData administrationCreateFeaturesWhisperRoute = RouteData(
     'create-features',
     name: 'administration_features_create',
   );

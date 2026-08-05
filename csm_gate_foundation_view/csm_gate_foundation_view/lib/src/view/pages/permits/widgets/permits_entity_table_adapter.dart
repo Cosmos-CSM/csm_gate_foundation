@@ -89,234 +89,119 @@ final class PermitsEntityTableAdapter extends GateFoundationEntityTableAdapterBa
 
     return EntityTableAdapterEditor<Permit>(
       onUpdate: (EntityTableAdapterEditorData<Permit> data) {
-        final Router router = InjectorUtils.get();
+        List<ObjectDifference> diffs = data.entity.compare(data.entityRef);
+        debugPrint('Updating Permit');
 
         showDialog(
           context: data.context,
-          useRootNavigator: true,
-          barrierDismissible: false,
-          builder: (BuildContext context) => _buildUpdateDialog(data.entity, router, context),
-        );
-      },
-
-      formBuilder:(EntityTableAdapterEditorData<Permit> data) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Column(
-            spacing: 20,
-            children: <Widget>[
-              const SectionDivider(text: 'Permit details'),
-              TextInput(
-                width: double.infinity,
-                label: 'Timestamp',
-                isEnabled: false,
-                controller: TextEditingController(
-                  text: data.entity.timestamp.fullDate,
-                ),
-              ),
-              OptionsSelector<bool>(
-                title: 'Enabled',
-                preSelected: <bool>[data.entity.enabled],
-                options:  <OptionsSelectorOption<bool>>[
-                  OptionsSelectorOption<bool>(
-                    title: 'Yes',
-                    value: true,
-                  ),
-                  OptionsSelectorOption<bool>(
-                    title: 'No',
-                    value: false,
-                  ),
-                ],
-                onSelect: (List<bool> selected) {
-                  data.entity.enabled = selected.firstOrNull ?? false;
-                },
-              ),
-              TextInput(
-                width: double.infinity,
-                label: '*Reference code',
-                maxLength: 8,
-                isFixedLength: true,
-                controller: TextEditingController(
-                  text: data.entity.reference,
-                ),
-                onChanged: (String text) {
-                  data.entity.reference = text;
-                },
-              ),
-              TextInput(
-                width: double.infinity,
-                label: '*Name',
-                maxLength: 100,
-                controller: TextEditingController(
-                  text: data.entity.name,
-                ),
-                onChanged: (String text) {
-                  data.entity.name = text;
-                },
-              ),
-              TextInput(
-                width: double.infinity,
-                label: 'Description',
-                maxLength: 200,
-                controller: TextEditingController(
-                  text: data.entity.description,
-                ),
-                onChanged: (String text) {
-                  data.entity.description = text.;
-                },
-              ),
-              EntityFinderSelector<Solution, SolutionsServiceI>(
-                entityBuilder: () => Solution(),
-                label: '*Select a Solution...',
-                initialValue: data.entity.solution,
-                textBuilder: (Solution solution) {
-                  return solution.name;
-                },
-                onSelected: (Solution? solution) {
-                  data.entity.solution = solution ?? Solution();
-                },
-              ),
-              EntityFinderSelector<Feature, FeaturesServiceI>(
-                entityBuilder: () => Feature(),
-                label: '*Select a Feature...',
-                initialValue: data.entity.feature,
-                textBuilder: (Feature feature) {
-                  return feature.name;
-                },
-                onSelected: (Feature? feature) {
-                  data.entity.feature = feature ?? Feature();
-                },
-              ),
-              EntityFinderSelector<Action, IActionsService>(
-                entityBuilder: () => Action(),
-                label: '*Select an Action...',
-                initialValue: data.entity.action,
-                textBuilder: (Action action) {
-                  return action.name;
-                },
-                onSelected: (Action? action) {
-                  data.entity.action = action ?? Action();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-  void _onUpdate(Permit entity, Router router, BuildContext context) async {
-    IPermitsService permitsService = InjectorUtils.get();
-
-    List<EntityErrors<Permit>> invalidations = entity.evaluate(<EntityErrors<Permit>>[]);
-
-    if(invalidations.isNotEmpty){
-      await showDialog(
-        context: context,
-        useRootNavigator: true,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return InvalidatingDialog(
-            title: 'Invalid Values',
-            invalidations: invalidations,
-            router: router,
-            context: context,
-          );
-        },
-      );
-      return;
-    }
-
-    String authToken = await composeAuth();
-
-    ResponseResolverBase<UpdateOutput<Permit>> resResolver = await permitsService.update(
-      UpdateInput<Permit>(entity),
-      authToken,
-    );
-
-    String? errMessage;
-    resResolver.resolve(
-      factory:
-          () => UpdateOutput<Permit>(
-            () => Permit(),
-          ),
-      onSuccess: (SuccessFrame<UpdateOutput<Permit>> success) {
-        refresh();
-      },
-      onFailure: (FailureFrame failure, int status) {
-        errMessage = failure.content.advise;
-      },
-      onException: (TracedException exception) {
-        errMessage = FoundationMessages.unknownServerException;
-      },
-      onConnectionFailure: () {
-        errMessage = FoundationMessages.connectionError;
-      },
-      onFinally: () {
-        Navigator.of(context).pop();
-        if (errMessage == null) return;
-
-        showDialog(
-          context: context,
-          useRootNavigator: true,
-          barrierDismissible: false,
           builder: (BuildContext context) {
-            return Dialog(
-              showCancelButton: false,
-              title: 'Error Updating contact',
-              content: Text(
-                errMessage as String,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              theming: ThemingUtils.get<FoundationThemeB>(context).controlError,
-              onAccept: () {
-                Navigator.of(context).pop();
-              },
+            return UpdateEntityDialog<Permit>(
+              differences: diffs,
             );
           },
         );
       },
-    );
-  }
 
-  Widget _buildUpdateDialog(Permit entity, Router router, BuildContext context){
-    return ResumeDialog(
-      title: 'Confirm Permit update',
-      router: router,
-      context: context,
-      acceptLabel: 'Update',
-      onAccept: () => _onUpdate(entity, router, context),
-      values: <TextLabel>[
-        TextLabel(
-          title: 'Reference code',
-          value: entity.reference,
-        ),
-        TextLabel(
-          title: 'Name',
-          value: entity.name.cleaned ?? '---',
-        ),
-        TextLabel(
-          title: 'Description',
-          value: entity.description.cleaned ?? '---',
-        ),
-        TextLabel(
-          title: 'Enabled',
-          value: entity.enabled? 'Yes' : 'No',
-        ),
-        TextLabel(
-          title: 'Solution',
-          value: entity.solution.name.cleaned ?? '---',
-        ),
-        TextLabel(
-          title: 'Feature',
-          value: entity.feature.name.cleaned ?? '---',
-        ),
-        TextLabel(
-          title: 'Action',
-          value: entity.action.name.cleaned ?? '---',
-        ),
-      ],
+      formBuilder:(EntityTableAdapterEditorData<Permit> data) {
+        return Column(
+          spacing: 20,
+          children: <Widget>[
+            const SectionDivider(text: 'Permit details'),
+            TextInput(
+              width: double.infinity,
+              label: 'Timestamp',
+              isEnabled: false,
+              controller: TextEditingController(
+                text: data.entity.timestamp.fullDate,
+              ),
+            ),
+            OptionsSelector<bool>(
+              title: 'Enabled',
+              preSelected: <bool>[data.entity.enabled],
+              options:  <OptionsSelectorOption<bool>>[
+                OptionsSelectorOption<bool>(
+                  title: 'Yes',
+                  value: true,
+                ),
+                OptionsSelectorOption<bool>(
+                  title: 'No',
+                  value: false,
+                ),
+              ],
+              onSelect: (List<bool> selected) {
+                data.entity.enabled = selected.firstOrNull ?? false;
+              },
+            ),
+            TextInput(
+              width: double.infinity,
+              label: '*Reference code',
+              maxLength: 8,
+              isFixedLength: true,
+              controller: TextEditingController(
+                text: data.entity.reference,
+              ),
+              onChanged: (String text) {
+                data.entity.reference = text;
+              },
+            ),
+            TextInput(
+              width: double.infinity,
+              label: '*Name',
+              maxLength: 100,
+              controller: TextEditingController(
+                text: data.entity.name,
+              ),
+              onChanged: (String text) {
+                data.entity.name = text;
+              },
+            ),
+            TextInput(
+              width: double.infinity,
+              label: 'Description',
+              maxLength: 200,
+              controller: TextEditingController(
+                text: data.entity.description,
+              ),
+              onChanged: (String text) {
+                data.entity.description = text.;
+              },
+            ),
+            EntityFinderSelector<Solution, SolutionsServiceI>(
+              entityBuilder: () => Solution(),
+              label: '*Select a Solution...',
+              initialValue: data.entity.solution,
+              textBuilder: (Solution solution) {
+                return solution.name;
+              },
+              onSelected: (Solution? solution) {
+                data.entity.solution = solution ?? Solution();
+              },
+            ),
+            EntityFinderSelector<Feature, FeaturesServiceI>(
+              entityBuilder: () => Feature(),
+              label: '*Select a Feature...',
+              initialValue: data.entity.feature,
+              textBuilder: (Feature feature) {
+                return feature.name;
+              },
+              onSelected: (Feature? feature) {
+                data.entity.feature = feature ?? Feature();
+              },
+            ),
+            EntityFinderSelector<Action, IActionsService>(
+              entityBuilder: () => Action(),
+              label: '*Select an Action...',
+              initialValue: data.entity.action,
+              textBuilder: (Action action) {
+                return action.name;
+              },
+              onSelected: (Action? action) {
+                data.entity.action = action ?? Action();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

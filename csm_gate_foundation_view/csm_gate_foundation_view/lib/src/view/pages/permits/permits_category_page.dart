@@ -1,7 +1,7 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_view/src/core/constants/routes_constants.dart';
 import 'package:csm_gate_foundation_view/src/view/pages/permits/permits_page.dart';
-import 'package:csm_gate_foundation_view/src/view/pages/permits/whispers/permits_page_create_whisper.dart';
+import 'package:csm_gate_foundation_view/src/view/pages/permits/whispers/create_permits_whisper.dart';
 import 'package:csm_gate_foundation_view/src/view/pages/permits/widgets/permits_entity_table_adapter.dart';
 import 'package:csm_view/csm_view.dart';
 import 'package:flutter/material.dart' hide Router;
@@ -15,19 +15,22 @@ import 'package:flutter/material.dart' hide Router;
 final class PermitsCategoryPage extends CategoryEntityViewPageBase<Permit, PermitsEntityTableAdapter> {
   /// Creates a new [PermitsCategoryPage] instance.
   PermitsCategoryPage({
-    super.cusRoute,
+    required super.routeData,
   }) : super(
-         title: 'Permits',
-         routeData: FoundationRoutes.permitsPageRoute,
+         title: 'Users',
        );
 
   @override
   List<IRoutingGraphData> composeRoutes() {
     return <IRoutingGraphData>[
       RoutingGraphWhisperData<Object>(
-        FoundationRoutes.permitsCreateWhisperRoute,
+        GateFoundationViewRouteConstants.administrationCreatePermitsWhisperRoute,
         whisperOptions: WhisperOptions(),
-        pageBuilder: (BuildContext ctx, RoutingData routeData) => PermitsPageCreateWhisper(),
+        pageBuilder: (BuildContext ctx, RoutingData routeData) {
+          return CreatePermitsWhispers(
+            tableAdapter: adapter,
+          );
+        } 
       ),
     ];
   }
@@ -60,7 +63,7 @@ final class PermitsCategoryPage extends CategoryEntityViewPageBase<Permit, Permi
       ),
       ActionsRisbbonCreate(
         onCreate: (BuildContext context) {
-          InjectorUtils.get<Router>().go(context, GateFoundationViewRouteConstants.permitsCreateWhisperRoute);
+          InjectorUtils.get<Router>().go(context, GateFoundationViewRouteConstants.administrationCreatePermitsWhisperRoute);
         },
       ),
     ];

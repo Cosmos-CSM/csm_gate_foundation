@@ -1,7 +1,7 @@
 import 'package:csm_gate_foundation_client/csm_gate_foundation_client.dart';
 import 'package:csm_gate_foundation_view/src/core/constants/routes_constants.dart';
 import 'package:csm_gate_foundation_view/src/view/pages/profiles/profiles_page.dart';
-import 'package:csm_gate_foundation_view/src/view/pages/profiles/whispers/profiles_page_create_whisper.dart';
+import 'package:csm_gate_foundation_view/src/view/pages/profiles/whispers/create_profiles_whisper.dart';
 import 'package:csm_gate_foundation_view/src/view/pages/profiles/widgets/profiles_entity_table_adapter.dart';
 import 'package:csm_view/csm_view.dart';
 import 'package:flutter/material.dart' hide Router;
@@ -14,20 +14,23 @@ import 'package:flutter/material.dart' hide Router;
 /// (@category Entity Pages)
 final class ProfilesCategoryPage extends CategoryEntityViewPageBase<Profile, ProfilesEntityTableAdapter> {
   /// Creates a new [ProfilesCategoryPage] instance.
-  ProfilesCategoryPage({
-    super.cusRoute,
+   ProfilesCategoryPage({
+    required super.routeData,
   }) : super(
          title: 'Profiles',
-         routeData: GateFoundationViewRouteConstants.profilesPageRoute,
        );
 
   @override
   List<IRoutingGraphData> composeRoutes() {
     return <IRoutingGraphData>[
       RoutingGraphWhisperData<Object>(
-        GateFoundationViewRouteConstants.profilesCreateWhisperRoute,
+        GateFoundationViewRouteConstants.administationCreateProfilesWhisperRoute,
         whisperOptions: WhisperOptions(),
-        pageBuilder: (BuildContext ctx, RoutingData routeData) => ProfilesPageCreateWhisper(),
+        pageBuilder: (BuildContext ctx, RoutingData routeData){
+          return CreateProfilesWhisper(
+            tableAdapter: adapter,
+          );
+        },
 
       ),
     ];
@@ -46,7 +49,7 @@ final class ProfilesCategoryPage extends CategoryEntityViewPageBase<Profile, Pro
       ),
       ActionsRisbbonCreate(
         onCreate: (BuildContext context) {
-          InjectorUtils.get<Router>().go(context, GateFoundationViewRouteConstants.profilesCreateWhisperRoute);
+          InjectorUtils.get<Router>().go(context, GateFoundationViewRouteConstants.administationCreateProfilesWhisperRoute);
         },
       ),
     ];
